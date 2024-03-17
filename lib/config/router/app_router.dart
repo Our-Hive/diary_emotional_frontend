@@ -5,6 +5,7 @@ import 'package:emotional_app/features/account/user/ui/screens/profile_view.dart
 import 'package:emotional_app/features/history/ui/layout/history_layout.dart';
 import 'package:emotional_app/features/home/ui/layouts/home_layout.dart';
 import 'package:emotional_app/features/home/ui/screens/home_view.dart';
+import 'package:emotional_app/features/home/ui/screens/primary_emotion_screen.dart';
 import 'package:emotional_app/features/info/ui/screens/info_view.dart';
 import 'package:emotional_app/features/my_space/ui/screens/my_space_view.dart';
 import 'package:emotional_app/config/router/app_paths.dart';
@@ -40,7 +41,7 @@ final appRouter = GoRouter(initialLocation: AppPaths.logIn, routes: [
           routes: [
             GoRoute(
               path: 'diary',
-              builder: (context, state) => const ProfileView(),
+              builder: (context, state) => const PrimaryEmotionScreen(),
             ),
             GoRoute(
               path: 'transcendentalEmotions',
