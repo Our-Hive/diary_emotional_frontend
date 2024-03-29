@@ -18,10 +18,13 @@ class ProfileView extends ConsumerStatefulWidget {
 class ProfileViewState extends ConsumerState<ProfileView> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(userProvider.notifier).getUser();
-    });
     super.initState();
+    ref.read(userProvider.notifier).getUser();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -37,7 +40,10 @@ class ProfileViewState extends ConsumerState<ProfileView> {
         context.pop();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(next.errorMessage),
+            content: Text(
+              next.errorMessage,
+              style: TextStyle(color: appColors.onError),
+            ),
             backgroundColor: appColors.error,
           ),
         );

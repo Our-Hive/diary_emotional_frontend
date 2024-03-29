@@ -28,7 +28,6 @@ class UserNotifier extends StateNotifier<UserState> {
         );
 
   Future<void> getUser() async {
-    state = state.copyWith(status: UserStatus.loading);
     try {
       final user = await _userRepository.getUser(_token);
       state = state.copyWith(
@@ -44,7 +43,6 @@ class UserNotifier extends StateNotifier<UserState> {
   }
 
   Future<void> disableUser(String password) async {
-    state = state.copyWith(status: UserStatus.loading);
     final bool isDeleted = await _userRepository.disableUser(_token, password);
     if (isDeleted) {
       state = state.copyWith(status: UserStatus.disabled);
