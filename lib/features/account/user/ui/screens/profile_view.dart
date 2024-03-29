@@ -1,4 +1,5 @@
 import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/shared/domain/utils/random_color.dart';
 import 'package:emotional_app/shared/ui/password_form_field.dart';
 import 'package:emotional_app/features/account/user/domain/entities/user.dart';
 import 'package:emotional_app/features/account/user/ui/provider/disable_form_provider.dart';
@@ -65,7 +66,7 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                   const SizedBox(height: 5),
                   ImageFiltered(
                     imageFilter: ColorFilter.mode(
-                      user.photoColor,
+                      RandomColor.generate(),
                       BlendMode.srcATop,
                     ),
                     child: const Image(
