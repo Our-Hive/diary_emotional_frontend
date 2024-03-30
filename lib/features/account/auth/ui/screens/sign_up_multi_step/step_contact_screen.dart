@@ -82,17 +82,19 @@ class _SignUpContactForm extends ConsumerWidget {
               );
         }
         if (next.state == SignUpState.failure && next.errorMessage.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                next.errorMessage,
-                style: TextStyle(
-                  color: appColors.onError,
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text(
+                  next.errorMessage,
+                  style: TextStyle(
+                    color: appColors.onError,
+                  ),
                 ),
+                backgroundColor: appColors.error,
               ),
-              backgroundColor: appColors.error,
-            ),
-          );
+            );
         }
       },
     );
