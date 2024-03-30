@@ -1,3 +1,4 @@
+import 'package:emotional_app/shared/domain/validators/validator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final loginFormProvider =
@@ -17,7 +18,10 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
   }
 
   bool onSubmit() {
-    state = state.copyWith(isSubmitting: true);
+    state = state.copyWith(
+      isFailure: false,
+      isSubmitting: true,
+    );
     if (validateCredentials()) {
       state = state.copyWith(
         isSuccess: true,
@@ -34,7 +38,32 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
   }
 
   bool validateCredentials() {
-    return state.email.isNotEmpty && state.password.isNotEmpty;
+    state = state.copyWith(
+      isFailure: false,
+      errorMessage: '',
+    );
+    if (Validators.isEmpty(state.email) || Validators.isEmpty(state.password)) {
+      state = state.copyWith(
+        isFailure: true,
+        errorMessage: 'Por favor, rellene todos los campos para continuar',
+      );
+      return false;
+    }
+    if (!Validators.isEmail(state.email)) {
+      state = state.copyWith(
+        isFailure: true,
+        errorMessage: 'Email inválido',
+      );
+      return false;
+    }
+    if (!Validators.isMinLength(state.password, 8)) {
+      state = state.copyWith(
+        isFailure: true,
+        errorMessage: 'La contraseña debe tener al menos 8 caracteres',
+      );
+      return false;
+    }
+    return true;
   }
 }
 
@@ -44,6 +73,7 @@ class LoginFormState {
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
+  final String errorMessage;
 
   LoginFormState({
     this.email = '',
@@ -51,6 +81,7 @@ class LoginFormState {
     this.isSubmitting = false,
     this.isSuccess = false,
     this.isFailure = false,
+    this.errorMessage = '',
   });
 
   LoginFormState copyWith({
@@ -59,6 +90,7 @@ class LoginFormState {
     bool? isSubmitting,
     bool? isSuccess,
     bool? isFailure,
+    String? errorMessage,
   }) =>
       LoginFormState(
         email: email ?? this.email,
@@ -66,5 +98,6 @@ class LoginFormState {
         isSubmitting: isSubmitting ?? this.isSubmitting,
         isSuccess: isSuccess ?? this.isSuccess,
         isFailure: isFailure ?? this.isFailure,
+        errorMessage: errorMessage ?? this.errorMessage,
       );
 }
