@@ -1,4 +1,4 @@
-import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/account/auth/ui/provider/signup_form_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +14,7 @@ class ToLoginTextButton extends ConsumerWidget {
     return TextButton(
         onPressed: () => {
               ref.watch(signUpFormProvider.notifier).cleanState(),
-              context.go(AppPaths.logIn),
+              context.go(AppRoutesName.logInScreen),
             },
         child: const Column(
           children: <Text>[

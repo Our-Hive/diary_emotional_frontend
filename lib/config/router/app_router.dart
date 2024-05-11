@@ -8,55 +8,66 @@ import 'package:emotional_app/features/home/ui/screens/home_view.dart';
 import 'package:emotional_app/features/home/ui/screens/primary_emotion_screen.dart';
 import 'package:emotional_app/features/info/ui/screens/info_view.dart';
 import 'package:emotional_app/features/my_space/ui/screens/my_space_view.dart';
-import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
-  initialLocation: AppPaths.logIn,
+  initialLocation: '/home/diary',
   routes: [
     GoRoute(
-      path: AppPaths.logIn,
+      path: '/login',
+      name: AppRoutesName.logInScreen,
       builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
-      path: AppPaths.signUp,
-      builder: (context, state) => const SignUpStepAccountScreen(),
-    ),
-    GoRoute(
-      path: AppPaths.signUpContact,
-      builder: (context, state) => const SignUpStepContactScreen(),
-    ),
+        path: '/signUp',
+        name: AppRoutesName.signUpAccount,
+        builder: (context, state) => const SignUpStepAccountScreen(),
+        routes: [
+          GoRoute(
+            path: 'contact',
+            name: AppRoutesName.signUpContact,
+            builder: (context, state) => const SignUpStepContactScreen(),
+          ),
+        ]),
     ShellRoute(
       builder: (context, state, child) => HoneLayout(childView: child),
       routes: [
         GoRoute(
-          path: AppPaths.profile,
+          path: '/profile',
+          name: AppRoutesName.profileView,
           builder: (context, state) => const ProfileView(),
         ),
         GoRoute(
-          path: AppPaths.history,
+          path: '/history',
+          name: AppRoutesName.historyView,
           builder: (context, state) => const HistoryLayout(),
         ),
         GoRoute(
-          path: AppPaths.home,
+          path: '/home',
+          name: AppRoutesName.homeView,
           builder: (context, state) => const HomeView(),
           routes: [
             GoRoute(
               path: 'diary',
+              name: AppRoutesName.diaryScreen,
               builder: (context, state) => const PrimaryEmotionScreen(),
             ),
             GoRoute(
               path: 'transcendentalEmotions',
+              name: AppRoutesName.transcendentalScreen,
               builder: (context, state) => const InfoView(),
             ),
           ],
         ),
         GoRoute(
-          path: AppPaths.info,
+          path: '/info',
+          name: AppRoutesName.infoView,
           builder: (context, state) => const InfoView(),
         ),
         GoRoute(
-          path: AppPaths.mySpace,
+          path: '/mySpace',
+          name: AppRoutesName.mySpaceView,
           builder: (context, state) => const MySpaceView(),
         ),
       ],

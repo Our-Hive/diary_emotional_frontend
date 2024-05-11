@@ -1,4 +1,4 @@
-import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/home/ui/widgets/home_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
                     'Registra tus emociones que has sentido a lo largo de tu dia, con el fin de tener un control de tus emociones y diariamente ser mas consiente de ellas.',
                 height: sizeByCard,
                 imagePath: 'assets/images/diary.jpeg',
-                onTap: () => context.push('${AppPaths.home}${AppPaths.diary}'),
+                onTap: () => context.pushNamed(AppRoutesName.diaryScreen),
               ),
               HomeCard(
                 title: 'Emociones Trascendentales',
@@ -34,7 +34,7 @@ class HomeView extends StatelessWidget {
                 height: sizeByCard,
                 imagePath: 'assets/images/trascendental.jpeg',
                 onTap: () =>
-                    context.push('${AppPaths.home}${AppPaths.transcendental}'),
+                    context.pushNamed(AppRoutesName.transcendentalScreen),
               ),
             ],
           ),

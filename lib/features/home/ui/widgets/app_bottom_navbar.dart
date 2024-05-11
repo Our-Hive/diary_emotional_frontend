@@ -1,4 +1,4 @@
-import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,19 +8,19 @@ class AppBottomNavbar extends StatelessWidget {
   void _onItemTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
-        context.go(AppPaths.profile);
+        context.goNamed(AppRoutesName.profileView);
         break;
       case 1:
-        context.go(AppPaths.history);
+        context.goNamed(AppRoutesName.historyView);
         break;
       case 2:
-        context.go(AppPaths.home);
+        context.goNamed(AppRoutesName.homeView);
         break;
       case 3:
-        context.go(AppPaths.info);
+        context.goNamed(AppRoutesName.infoView);
         break;
       case 4:
-        context.go(AppPaths.mySpace);
+        context.goNamed(AppRoutesName.mySpaceView);
         break;
       default:
     }
@@ -30,25 +30,25 @@ class AppBottomNavbar extends StatelessWidget {
     BuildContext context,
   ) {
     final String? path = GoRouterState.of(context).fullPath;
-    switch (path) {
-      case AppPaths.profile:
+    final String principalPath = path!.split('/')[1];
+    switch (principalPath) {
+      case 'profile':
         return 0;
-      case AppPaths.history:
+      case 'history':
         return 1;
-      case AppPaths.home:
+      case 'home':
         return 2;
-      case AppPaths.info:
+      case 'info':
         return 3;
-      case AppPaths.mySpace:
+      case 'mySpace':
         return 4;
       default:
-        return 0;
+        return 2;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    //final appColors = Theme.of(context).colorScheme;
     return BottomNavigationBar(
       onTap: (indexSelected) => _onItemTapped(context, indexSelected),
       currentIndex: _getCurrentIndex(context),
