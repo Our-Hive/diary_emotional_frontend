@@ -1,4 +1,4 @@
-import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/shared/domain/utils/random_color.dart';
 import 'package:emotional_app/shared/ui/password_form_field.dart';
 import 'package:emotional_app/features/account/user/domain/entities/user.dart';
@@ -35,7 +35,7 @@ class ProfileViewState extends ConsumerState<ProfileView> {
 
     ref.listen(userProvider, (previous, next) {
       if (next.status == UserStatus.disabled) {
-        context.go(AppPaths.logIn);
+        context.goNamed(AppRoutesName.logInScreen);
       }
       if (next.status == UserStatus.error) {
         context.pop();

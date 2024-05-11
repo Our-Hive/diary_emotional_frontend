@@ -1,4 +1,4 @@
-import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/account/auth/ui/provider/signup_form_provider.dart';
 import 'package:emotional_app/shared/ui/password_form_field.dart';
 import 'package:emotional_app/features/account/auth/ui/widgets/to_login_text_button.dart';
@@ -48,7 +48,7 @@ class _SignUpAccountForm extends ConsumerWidget {
       (previous, next) {
         if (next.state == SignUpState.success &&
             next.currentStep == SignUpStep.contactStep) {
-          context.push(AppPaths.signUpContact);
+          context.pushNamed(AppRoutesName.signUpContact);
         }
         if (next.state == SignUpState.failure && next.errorMessage.isNotEmpty) {
           ScaffoldMessenger.of(context)

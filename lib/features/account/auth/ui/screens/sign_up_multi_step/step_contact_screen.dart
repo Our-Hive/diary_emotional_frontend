@@ -1,4 +1,4 @@
-import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/account/auth/domain/entities/sign_up_credentials.dart';
 import 'package:emotional_app/features/account/auth/ui/provider/auth_provider.dart';
 import 'package:emotional_app/features/account/auth/ui/provider/signup_form_provider.dart';
@@ -47,7 +47,7 @@ class _SignUpContactForm extends ConsumerWidget {
 
     ref.listen(authProvider, (_, next) {
       if (next.isAuth) {
-        context.go(AppPaths.home);
+        context.goNamed(AppRoutesName.homeView);
       }
       if (next.error.isNotEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(

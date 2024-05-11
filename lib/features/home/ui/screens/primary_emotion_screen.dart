@@ -14,8 +14,12 @@ class PrimaryEmotionScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'Selecciona la emoción primaria',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 20),
             EmotionalRoulette(),
-            Text('Primary Emotion'),
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:emotional_app/config/router/app_paths.dart';
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/account/auth/ui/provider/auth_provider.dart';
 import 'package:emotional_app/features/account/auth/ui/provider/login_form_provider.dart';
 import 'package:emotional_app/shared/ui/password_form_field.dart';
@@ -52,7 +52,7 @@ class LoginScreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         Future.delayed(
           const Duration(milliseconds: 500),
-          () => context.go(AppPaths.home),
+          () => context.goNamed(AppRoutesName.homeView),
         );
       }
     });
@@ -95,7 +95,7 @@ class LoginScreen extends ConsumerWidget {
                     thickness: 2,
                   ),
                   TextButton(
-                    onPressed: () => context.go(AppPaths.signUp),
+                    onPressed: () => context.go(AppRoutesName.signUpAccount),
                     child: const Column(
                       children: <Text>[
                         Text('¿No puedes iniciar sesión?'),
