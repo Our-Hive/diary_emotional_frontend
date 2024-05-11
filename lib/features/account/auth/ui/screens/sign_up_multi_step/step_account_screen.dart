@@ -17,19 +17,20 @@ class SignUpStepAccountScreen extends StatelessWidget {
       ),
       body: const Center(
         child: Padding(
-            padding: EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  _SignUpAccountForm(),
-                  Divider(
-                    height: 50,
-                    thickness: 2,
-                  ),
-                  ToLoginTextButton(),
-                ],
-              ),
-            )),
+          padding: EdgeInsets.all(20),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                _SignUpAccountForm(),
+                Divider(
+                  height: 50,
+                  thickness: 2,
+                ),
+                ToLoginTextButton(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -50,17 +51,19 @@ class _SignUpAccountForm extends ConsumerWidget {
           context.pushNamed(AppRoutesName.signUpContact);
         }
         if (next.state == SignUpState.failure && next.errorMessage.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                next.errorMessage,
-                style: TextStyle(
-                  color: appColors.onError,
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                backgroundColor: appColors.error,
+                content: Text(
+                  next.errorMessage,
+                  style: TextStyle(
+                    color: appColors.onError,
+                  ),
                 ),
               ),
-              backgroundColor: appColors.error,
-            ),
-          );
+            );
         }
       },
     );

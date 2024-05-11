@@ -1,3 +1,4 @@
+import 'package:emotional_app/shared/domain/validators/validator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final signUpFormProvider =
@@ -9,35 +10,59 @@ class SignUpFormNotifier extends StateNotifier<SignUpFormState> {
   SignUpFormNotifier() : super(SignUpFormState());
 
   void onNickNameChanged(String nickName) {
-    state = state.copyWith(nickName: nickName);
+    state = state.copyWith(
+      nickName: nickName,
+      state: SignUpState.validating,
+    );
   }
 
   void onEmailChanged(String email) {
-    state = state.copyWith(email: email);
+    state = state.copyWith(
+      email: email,
+      state: SignUpState.validating,
+    );
   }
 
   void onPasswordChanged(String password) {
-    state = state.copyWith(password: password);
+    state = state.copyWith(
+      password: password,
+      state: SignUpState.validating,
+    );
   }
 
   void onConfirmPasswordChanged(String confirmPassword) {
-    state = state.copyWith(confirmPassword: confirmPassword);
+    state = state.copyWith(
+      confirmPassword: confirmPassword,
+      state: SignUpState.validating,
+    );
   }
 
   void onFirstNameChanged(String firstName) {
-    state = state.copyWith(firstName: firstName);
+    state = state.copyWith(
+      firstName: firstName,
+      state: SignUpState.validating,
+    );
   }
 
   void onLastNameChanged(String lastName) {
-    state = state.copyWith(lastName: lastName);
+    state = state.copyWith(
+      lastName: lastName,
+      state: SignUpState.validating,
+    );
   }
 
   void onPhoneNumberChanged(String phoneNumber) {
-    state = state.copyWith(phoneNumber: phoneNumber);
+    state = state.copyWith(
+      phoneNumber: phoneNumber,
+      state: SignUpState.validating,
+    );
   }
 
   void onBirthDateChanged(DateTime birthDate) {
-    state = state.copyWith(birthDate: birthDate);
+    state = state.copyWith(
+      birthDate: birthDate,
+      state: SignUpState.validating,
+    );
   }
 
   void onStepChanged(SignUpStep step) {
@@ -45,14 +70,48 @@ class SignUpFormNotifier extends StateNotifier<SignUpFormState> {
   }
 
   bool validateAccountStep() {
-    return state.nickName.isNotEmpty &&
-        state.email.isNotEmpty &&
-        state.password.isNotEmpty &&
-        state.confirmPassword.isNotEmpty &&
-        state.password == state.confirmPassword;
+    if (Validators.isEmpty(state.nickName) ||
+        Validators.isEmpty(state.email) ||
+        Validators.isEmpty(state.password) ||
+        Validators.isEmpty(state.confirmPassword)) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'Por favor, rellene todos los campos para continuar',
+      );
+      return false;
+    }
+    if (!Validators.isMinLength(state.nickName, 3)) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'El nombre de usuario debe tener al menos 3 caracteres',
+      );
+      return false;
+    }
+    if (!Validators.isEmail(state.email)) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'Email inválido',
+      );
+      return false;
+    }
+    if (!Validators.isSamePassword(state.password, state.confirmPassword)) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'Las contraseñas no coinciden',
+      );
+      return false;
+    }
+    if (!Validators.isMinLength(state.password, 8)) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'La contraseña debe tener al menos 8 caracteres',
+      );
+      return false;
+    }
+    return true;
   }
 
-  void onSummitAccountStep() {
+  bool onSummitAccountStep() {
     state = state.copyWith(
       currentStep: SignUpStep.accountStep,
       state: SignUpState.validating,
@@ -63,19 +122,52 @@ class SignUpFormNotifier extends StateNotifier<SignUpFormState> {
         currentStep: SignUpStep.contactStep,
         state: SignUpState.success,
       );
+      return true;
     } else {
       state = state.copyWith(
         state: SignUpState.failure,
-        errorMessage: 'Campos inválidos',
       );
+      return false;
     }
   }
 
   bool validateContactStep() {
-    return state.firstName.isNotEmpty &&
-        state.lastName.isNotEmpty &&
-        state.phoneNumber.isNotEmpty &&
-        state.birthDate != null;
+    state = state.copyWith(
+      state: SignUpState.validating,
+      errorMessage: '',
+    );
+    if (Validators.isEmpty(state.firstName) ||
+        Validators.isEmpty(state.lastName) ||
+        Validators.isEmpty(state.phoneNumber) ||
+        state.birthDate == null) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'Por favor, rellene todos los campos para continuar',
+      );
+      return false;
+    }
+    if (!Validators.isMinLength(state.firstName, 3)) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'El nombre debe tener al menos 3 caracteres',
+      );
+      return false;
+    }
+    if (!Validators.isMinLength(state.lastName, 3)) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'El apellido debe tener al menos 3 caracteres',
+      );
+      return false;
+    }
+    if (!Validators.isMinLength(state.phoneNumber, 10)) {
+      state = state.copyWith(
+        state: SignUpState.failure,
+        errorMessage: 'El número de teléfono debe tener al menos 10 caracteres',
+      );
+      return false;
+    }
+    return true;
   }
 
   void onSummitContactStep() {
@@ -91,7 +183,6 @@ class SignUpFormNotifier extends StateNotifier<SignUpFormState> {
     } else {
       state = state.copyWith(
         state: SignUpState.failure,
-        errorMessage: 'Campos inválidos',
       );
     }
   }

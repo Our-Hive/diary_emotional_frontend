@@ -12,44 +12,39 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ColorScheme appColors = Theme.of(context).colorScheme;
+
     ref.listen(loginFormProvider, (previous, next) {
-      if (next.isSubmitting) {
+      if (next.isFailure && next.errorMessage.isNotEmpty && next.isSubmitting) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
-            const SnackBar(
-              content: Text('Validando...'),
-            ),
-          );
-      }
-      if (next.isFailure && !next.isSubmitting) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            const SnackBar(
-              content: Text('Verifique los campos.'),
+            SnackBar(
+              backgroundColor: appColors.error,
+              content: Text(
+                next.errorMessage,
+                style: TextStyle(
+                  color: appColors.onError,
+                ),
+              ),
             ),
           );
       }
     });
 
     ref.listen(authProvider, (previous, next) {
-      if (next.isLoading && next.isAuth == false) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            const SnackBar(
-              content: Text('Iniciando Sesión...'),
-            ),
-          );
-      }
       if (next.error.isNotEmpty) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
             SnackBar(
-              content: Text(next.error),
+              backgroundColor: appColors.error,
+              content: Text(
+                next.error,
+                style: TextStyle(
+                  color: appColors.onError,
+                ),
+              ),
             ),
           );
       }
@@ -154,7 +149,6 @@ class _LoginForm extends ConsumerWidget {
                     .login(loginFormData.email, loginFormData.password);
               }
             },
-            //style:
             child: const Text('Inicio de Sesión'),
           ),
         ],

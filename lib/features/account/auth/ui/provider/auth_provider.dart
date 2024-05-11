@@ -5,8 +5,10 @@ import 'package:emotional_app/features/account/auth/domain/repository/auth_local
 import 'package:emotional_app/features/account/auth/domain/repository/auth_repo.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/data_source/auth_api_data_source_impl.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/data_source/auth_local_data_source_impl.dart';
+import 'package:emotional_app/features/account/auth/infrastructure/exceptions/invalid_credentials.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/repo/auth_local_repo_impl.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/repo/auth_repo_impl.dart';
+import 'package:emotional_app/shared/infrastructure/exceptions/http_exception.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>(
@@ -31,7 +33,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
         super(AuthState.initial());
 
   Future<void> login(String email, String password) async {
-    state = state.copyWith(isLoading: true, error: '');
     try {
       final token = await _authApiRepo.login(
         LoginCredentials(
@@ -48,13 +49,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
         isAuth: true,
         token: token,
       );
+    } on InvalidCredentialsException catch (e) {
+      state = state.copyWith(isLoading: false, error: e.message);
+    } on HttpException catch (e) {
+      state = state.copyWith(isLoading: false, error: e.message);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
   Future<void> signUp(SignUpCredentials signUpCredentials) async {
-    state = state.copyWith(isLoading: true, error: '');
     try {
       final token = await _authApiRepo.signUp(signUpCredentials);
       final isSaved = await _authLocalRepo.saveAuthToken(token);
@@ -66,6 +70,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
         isAuth: true,
         token: token,
       );
+    } on InvalidCredentialsException catch (e) {
+      state = state.copyWith(isLoading: false, error: e.message);
+    } on HttpException catch (e) {
+      state = state.copyWith(isLoading: false, error: e.message);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
