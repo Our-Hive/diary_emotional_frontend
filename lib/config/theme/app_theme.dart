@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:emotional_app/config/theme/app_color_scheme.dart';
 
 class AppTheme {
   static ThemeData dark() => ThemeData(
-        colorScheme: const ColorScheme.dark(
-          background: Color(0xFF1A1C27),
-          primary: Color(0xFF57C877),
-          onPrimary: Color(0xFF1A1C27),
-          secondary: Color(0xFF191429),
-          onSecondary: Color(0xFFFFFFFF),
-          error: Color(0xFFF42A55),
-          onError: Color(0xFFFFFFFF),
-          surface: Color(0xFF142929),
-          onSurface: Color(0xFFFFFFFF),
-        ),
+        colorScheme: appColorScheme,
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -20,8 +11,9 @@ class AppTheme {
         ),
         filledButtonTheme: FilledButtonThemeData(
           style: ButtonStyle(
-            minimumSize:
-                MaterialStateProperty.all(const Size(double.infinity, 50)),
+            minimumSize: MaterialStateProperty.all(
+              const Size(double.infinity, 50),
+            ),
             shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
