@@ -1,26 +1,20 @@
-import 'package:emotional_app/features/account/auth/domain/entities/token.dart';
-import 'package:emotional_app/features/account/auth/ui/provider/auth_provider.dart';
 import 'package:emotional_app/features/account/user/domain/entities/user.dart';
 import 'package:emotional_app/features/account/user/domain/repository/user_repository.dart';
-import 'package:emotional_app/features/account/user/infrastructure/data_source/api_user_data_source_impl.dart';
+import 'package:emotional_app/features/account/user/infrastructure/data_source/user_api_data_source_impl.dart';
 import 'package:emotional_app/features/account/user/infrastructure/repository/user_repository_impl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final userProvider = StateNotifierProvider<UserNotifier, UserState>(
   (ref) => UserNotifier(
-    userRepository: UserRepositoryImpl(ApiUserDataSourceImpl()),
-    token: ref.watch(authProvider).token ?? Token(accessToken: ''),
+    userRepository: UserRepositoryImpl(UserApiDataSourceImpl()),
   ),
 );
 
 class UserNotifier extends StateNotifier<UserState> {
   final UserRepository _userRepository;
-  final Token _token;
   UserNotifier({
     required UserRepository userRepository,
-    required Token token,
   })  : _userRepository = userRepository,
-        _token = token,
         super(
           UserState(
             currentUser: User.empty(),
@@ -29,7 +23,7 @@ class UserNotifier extends StateNotifier<UserState> {
 
   Future<void> getUser() async {
     try {
-      final user = await _userRepository.getUser(_token);
+      final user = await _userRepository.getUser();
       state = state.copyWith(
         currentUser: user,
         status: UserStatus.success,
@@ -43,7 +37,7 @@ class UserNotifier extends StateNotifier<UserState> {
   }
 
   Future<void> disableUser(String password) async {
-    final bool isDeleted = await _userRepository.disableUser(_token, password);
+    final bool isDeleted = await _userRepository.disableUser(password);
     if (isDeleted) {
       state = state.copyWith(status: UserStatus.disabled);
       return;

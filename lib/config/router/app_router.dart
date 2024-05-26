@@ -12,7 +12,7 @@ import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/home/diary',
+  initialLocation: '/login',
   routes: [
     GoRoute(
       path: '/login',

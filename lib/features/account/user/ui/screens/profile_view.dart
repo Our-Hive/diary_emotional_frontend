@@ -38,7 +38,6 @@ class ProfileViewState extends ConsumerState<ProfileView> {
         context.goNamed(AppRoutesName.logInScreen);
       }
       if (next.status == UserStatus.error) {
-        context.pop();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(

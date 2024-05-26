@@ -2,7 +2,7 @@ import 'package:emotional_app/features/account/auth/domain/entities/login_creden
 import 'package:emotional_app/features/account/auth/domain/entities/sign_up_credentials.dart';
 import 'package:emotional_app/features/account/auth/domain/entities/token.dart';
 
-abstract class AuthDataSource {
+abstract class AuthExternalRepository {
   Future<Token> login(LoginCredentials authCredentials);
   Future<Token> signUp(SignUpCredentials signUpCredentials);
 }
