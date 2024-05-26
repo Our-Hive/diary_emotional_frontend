@@ -1,4 +1,4 @@
-class ApiUser {
+class UserApiResponseDto {
   final int id;
   final String role;
   final String username;
@@ -8,7 +8,7 @@ class ApiUser {
   final String mobileNumber;
   final DateTime birthDate;
 
-  ApiUser({
+  UserApiResponseDto({
     required this.id,
     required this.role,
     required this.username,
@@ -19,7 +19,8 @@ class ApiUser {
     required this.birthDate,
   });
 
-  factory ApiUser.fromJson(Map<String, dynamic> json) => ApiUser(
+  factory UserApiResponseDto.fromJson(Map<String, dynamic> json) =>
+      UserApiResponseDto(
         id: json["id"],
         role: json["role"],
         username: json["username"],

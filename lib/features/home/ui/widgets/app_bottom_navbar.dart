@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppBottomNavbar extends StatelessWidget {
-  const AppBottomNavbar({Key? key}) : super(key: key);
+  const AppBottomNavbar({super.key});
 
   void _onItemTapped(BuildContext context, int index) {
     switch (index) {
