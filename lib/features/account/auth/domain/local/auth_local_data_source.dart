@@ -1,7 +1,7 @@
 import 'package:emotional_app/features/account/auth/domain/entities/token.dart';
 
-abstract class AuthLocalRepo {
+abstract class AuthLocalDataSource {
   Future<bool> saveAuthToken(Token token);
-  Future<Token> getAuthToken();
+  Token? getAuthToken();
   Future<bool> deleteAuthToken();
 }

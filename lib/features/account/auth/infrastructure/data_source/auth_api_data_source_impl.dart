@@ -1,25 +1,20 @@
-import 'package:emotional_app/config/app_environment.dart';
-import 'package:emotional_app/features/account/auth/domain/data_source/auth_data_source.dart';
+import 'package:emotional_app/config/http/app_http_singleton.dart';
+import 'package:emotional_app/features/account/auth/domain/external/auth_external_data_source.dart';
 import 'package:emotional_app/features/account/auth/domain/entities/login_credentials.dart';
 import 'package:emotional_app/features/account/auth/domain/entities/sign_up_credentials.dart';
 import 'package:emotional_app/features/account/auth/domain/entities/token.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/exceptions/invalid_credentials.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/mapper/token_login_api_mapper.dart';
-import 'package:emotional_app/features/account/auth/infrastructure/model/auth_api_response.dart';
+import 'package:emotional_app/features/account/auth/infrastructure/dto/auth_api_response.dart';
 import 'package:emotional_app/shared/infrastructure/exceptions/http_exception.dart';
 import 'package:dio/dio.dart';
 
-class AuthApiDataSourceImpl implements AuthDataSource {
-  final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: '${AppEnvironment.apiUrl}/auth',
-    ),
-  );
+class AuthApiDataSourceImpl implements AuthExternalDataSource {
   @override
   Future<Token> login(LoginCredentials authCredentials) async {
     try {
-      final response = await _dio.post(
-        '/login',
+      final response = await AppHttpSingleton().post(
+        '/auth/login',
         data: {
           'email': authCredentials.email,
           'password': authCredentials.password,
@@ -37,8 +32,8 @@ class AuthApiDataSourceImpl implements AuthDataSource {
   @override
   Future<Token> signUp(SignUpCredentials signUpCredentials) async {
     try {
-      final response = await _dio.post(
-        '/signup',
+      final response = await AppHttpSingleton().post(
+        '/auth/signup',
         data: {
           'username': signUpCredentials.username,
           'email': signUpCredentials.email,

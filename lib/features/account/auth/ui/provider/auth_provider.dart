@@ -1,33 +1,34 @@
 import 'package:emotional_app/features/account/auth/domain/entities/login_credentials.dart';
 import 'package:emotional_app/features/account/auth/domain/entities/sign_up_credentials.dart';
 import 'package:emotional_app/features/account/auth/domain/entities/token.dart';
-import 'package:emotional_app/features/account/auth/domain/repository/auth_local_repo.dart';
-import 'package:emotional_app/features/account/auth/domain/repository/auth_repo.dart';
+import 'package:emotional_app/features/account/auth/domain/local/auth_local_repository.dart';
+import 'package:emotional_app/features/account/auth/domain/external/auth_external_repository.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/data_source/auth_api_data_source_impl.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/data_source/auth_local_data_source_impl.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/exceptions/invalid_credentials.dart';
-import 'package:emotional_app/features/account/auth/infrastructure/repo/auth_local_repo_impl.dart';
-import 'package:emotional_app/features/account/auth/infrastructure/repo/auth_repo_impl.dart';
+import 'package:emotional_app/features/account/auth/infrastructure/repository/auth_local_repository_impl.dart';
+import 'package:emotional_app/features/account/auth/infrastructure/repository/auth_repository_impl.dart';
 import 'package:emotional_app/shared/infrastructure/exceptions/http_exception.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>(
   (ref) => AuthNotifier(
-    authApiRepo: AuthRepoImpl(
-      authDataSource: AuthApiDataSourceImpl(),
+    authApiRepo: AuthExternalRepositoryImpl(
+      AuthApiDataSourceImpl(),
     ),
-    authLocalRepo: AuthLocalRepoImpl(
-      authLocalDataSource: AuthLocalDataSourceImpl(),
+    authLocalRepo: AuthLocalRepositoryImpl(
+      AuthLocalDataSourceImpl(),
     ),
   ),
 );
 
 class AuthNotifier extends StateNotifier<AuthState> {
-  final AuthRepo _authApiRepo;
-  final AuthLocalRepo _authLocalRepo;
+  final AuthExternalRepository _authApiRepo;
+  final AuthLocalRepository _authLocalRepo;
 
   AuthNotifier(
-      {required AuthRepo authApiRepo, required AuthLocalRepo authLocalRepo})
+      {required AuthExternalRepository authApiRepo,
+      required AuthLocalRepository authLocalRepo})
       : _authApiRepo = authApiRepo,
         _authLocalRepo = authLocalRepo,
         super(AuthState.initial());
