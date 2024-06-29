@@ -48,7 +48,7 @@ class LoginScreen extends ConsumerWidget {
             ),
           );
       }
-      if (next.isAuth) {
+      if (next.authStatus == AuthStatus.authenticated) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         Future.delayed(
           const Duration(milliseconds: 500),
@@ -73,7 +73,8 @@ class LoginScreen extends ConsumerWidget {
                     animate: true,
                     duration: const Duration(seconds: 1),
                     child: FadeOutUp(
-                      animate: ref.watch(authProvider).isAuth,
+                      animate: ref.watch(authProvider).authStatus ==
+                          AuthStatus.authenticated,
                       duration: const Duration(milliseconds: 500),
                       child: Container(
                         padding: const EdgeInsets.all(40),

@@ -12,11 +12,12 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appRouter = ref.watch(goRouterProvider);
     return MaterialApp.router(
       title: 'OurHive - Emotional Diary',
       theme: AppTheme.dark(),

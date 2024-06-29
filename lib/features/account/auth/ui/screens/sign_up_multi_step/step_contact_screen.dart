@@ -46,7 +46,7 @@ class _SignUpContactForm extends ConsumerWidget {
     final ColorScheme appColors = Theme.of(context).colorScheme;
 
     ref.listen(authProvider, (_, next) {
-      if (next.isAuth) {
+      if (next.authStatus == AuthStatus.authenticated) {
         context.goNamed(AppRoutesName.homeView);
       }
       if (next.error.isNotEmpty) {
