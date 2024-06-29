@@ -16,6 +16,7 @@ class AppHttpSingleton {
 
   void initializeDio() {
     final token = _getToken();
+
     _dioMainApi = Dio(
       BaseOptions(
         baseUrl: AppEnvironment.apiUrl,
