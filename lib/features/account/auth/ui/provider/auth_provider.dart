@@ -26,12 +26,33 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final AuthExternalRepository _authApiRepo;
   final AuthLocalRepository _authLocalRepo;
 
-  AuthNotifier(
-      {required AuthExternalRepository authApiRepo,
-      required AuthLocalRepository authLocalRepo})
-      : _authApiRepo = authApiRepo,
+  AuthNotifier({
+    required AuthExternalRepository authApiRepo,
+    required AuthLocalRepository authLocalRepo,
+  })  : _authApiRepo = authApiRepo,
         _authLocalRepo = authLocalRepo,
-        super(AuthState.initial());
+        super(AuthState.initial()) {
+    hasToken();
+  }
+  void hasToken() {
+    try {
+      final Token? token = _authLocalRepo.getAuthToken();
+      if (token != null && token.accessToken.isNotEmpty) {
+        state = state.copyWith(
+          authStatus: AuthStatus.authenticated,
+          token: token,
+        );
+      } else {
+        state = state.copyWith(
+          authStatus: AuthStatus.unAuthenticated,
+        );
+      }
+    } catch (e) {
+      state = state.copyWith(
+        authStatus: AuthStatus.unAuthenticated,
+      );
+    }
+  }
 
   Future<void> login(String email, String password) async {
     try {
@@ -46,16 +67,24 @@ class AuthNotifier extends StateNotifier<AuthState> {
         throw Exception('Error saving token.');
       }
       state = state.copyWith(
-        isLoading: false,
-        isAuth: true,
+        authStatus: AuthStatus.authenticated,
         token: token,
       );
     } on InvalidCredentialsException catch (e) {
-      state = state.copyWith(isLoading: false, error: e.message);
+      state = state.copyWith(
+        authStatus: AuthStatus.unAuthenticated,
+        error: e.message,
+      );
     } on HttpException catch (e) {
-      state = state.copyWith(isLoading: false, error: e.message);
+      state = state.copyWith(
+        authStatus: AuthStatus.error,
+        error: e.message,
+      );
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(
+        authStatus: AuthStatus.error,
+        error: e.toString(),
+      );
     }
   }
 
@@ -67,49 +96,48 @@ class AuthNotifier extends StateNotifier<AuthState> {
         throw Exception('Error saving token.');
       }
       state = state.copyWith(
-        isLoading: false,
-        isAuth: true,
+        authStatus: AuthStatus.authenticated,
         token: token,
       );
     } on InvalidCredentialsException catch (e) {
-      state = state.copyWith(isLoading: false, error: e.message);
+      state = state.copyWith(
+        authStatus: AuthStatus.unAuthenticated,
+        error: e.message,
+      );
     } on HttpException catch (e) {
-      state = state.copyWith(isLoading: false, error: e.message);
+      state = state.copyWith(authStatus: AuthStatus.error, error: e.message);
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(authStatus: AuthStatus.error, error: e.toString());
     }
   }
 }
 
+enum AuthStatus { authenticated, unAuthenticated, verifying, error }
+
 class AuthState {
-  final bool isLoading;
-  final bool isAuth;
   final Token? token;
+  final AuthStatus authStatus;
   final String error;
 
   AuthState({
-    required this.isLoading,
-    required this.isAuth,
+    this.authStatus = AuthStatus.verifying,
     this.token,
     this.error = '',
   });
 
   factory AuthState.initial() {
     return AuthState(
-      isLoading: false,
-      isAuth: false,
+      authStatus: AuthStatus.verifying,
     );
   }
 
   AuthState copyWith({
-    bool? isLoading,
-    bool? isAuth,
+    AuthStatus? authStatus,
     Token? token,
     String? error,
   }) {
     return AuthState(
-      isLoading: isLoading ?? this.isLoading,
-      isAuth: isAuth ?? this.isAuth,
+      authStatus: authStatus ?? this.authStatus,
       token: token ?? this.token,
       error: error ?? this.error,
     );
