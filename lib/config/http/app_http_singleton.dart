@@ -42,7 +42,14 @@ class AppHttpSingleton {
         AuthLocalDataSourceImpl(),
       ).getAuthToken();
 
+  updateToken() {
+    final token = _getToken();
+    _dioMainApi.options.headers['Authorization'] =
+        'Bearer ${token?.accessToken}';
+  }
+
   Future<Response> get(String url, {Map<String, dynamic>? params}) async {
+    updateToken();
     return _dioMainApi.get(
       url,
       queryParameters: params,
