@@ -78,14 +78,8 @@ class LoginScreen extends ConsumerWidget {
                       duration: const Duration(milliseconds: 500),
                       child: Container(
                         padding: const EdgeInsets.all(40),
-                        child: ImageFiltered(
-                          imageFilter: const ColorFilter.mode(
-                            Colors.yellow,
-                            BlendMode.srcATop,
-                          ),
-                          child: Image.asset(
-                            'assets/app_image.png',
-                          ),
+                        child: Image.asset(
+                          'assets/app_image_yellow.webp',
                         ),
                       ),
                     ),
