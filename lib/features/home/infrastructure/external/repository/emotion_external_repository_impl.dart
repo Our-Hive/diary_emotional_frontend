@@ -9,4 +9,9 @@ class EmotionExternalRepositoryImpl implements EmotionExternalRepository {
   Future<Set<Emotion>> getPrimaryEmotions() {
     return _dataSource.getPrimaryEmotions();
   }
+
+  @override
+  Future<List<Emotion>> getSecondaryEmotions(String primaryEmotionName) {
+    return _dataSource.getSecondaryEmotions(primaryEmotionName);
+  }
 }

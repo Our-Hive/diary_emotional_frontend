@@ -3,18 +3,14 @@ class GetPrimaryEmotionResponseDto {
   final String description;
   final String color;
   final String theme;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final dynamic deletedAt;
+  final dynamic secondaryEmotions;
 
   GetPrimaryEmotionResponseDto({
     required this.name,
     required this.description,
     required this.color,
     required this.theme,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
+    required this.secondaryEmotions,
   });
 
   factory GetPrimaryEmotionResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -23,9 +19,7 @@ class GetPrimaryEmotionResponseDto {
         description: json["description"],
         color: json["color"],
         theme: json["theme"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        deletedAt: json["deletedAt"],
+        secondaryEmotions: json["secondaryEmotions"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -33,8 +27,6 @@ class GetPrimaryEmotionResponseDto {
         "description": description,
         "color": color,
         "theme": theme,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "deletedAt": deletedAt,
+        "secondaryEmotions": secondaryEmotions,
       };
 }

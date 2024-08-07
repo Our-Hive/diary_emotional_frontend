@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:emotional_app/config/env/app_environment.dart';
-import 'package:emotional_app/features/account/auth/domain/entities/token.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/data_source/auth_local_data_source_impl.dart';
 import 'package:emotional_app/features/account/auth/infrastructure/repository/auth_local_repository_impl.dart';
 
 class AppHttpSingleton {
+  final _authLocalRepo = AuthLocalRepositoryImpl(
+    AuthLocalDataSourceImpl(),
+  );
+
   late Dio _dioMainApi;
   static final _instance = AppHttpSingleton._internal();
 
@@ -15,41 +18,28 @@ class AppHttpSingleton {
   }
 
   void initializeDio() {
-    final token = _getToken();
-
     _dioMainApi = Dio(
       BaseOptions(
         baseUrl: AppEnvironment.apiUrl,
-        headers: {
-          if (token != null) 'Authorization': 'Bearer ${token.accessToken}',
-        },
       ),
     );
 
     _dioMainApi.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
+          final token = _authLocalRepo.getAuthToken()?.accessToken;
+          options.headers.addAll({
+            'Authorization': 'Bearer $token',
+          });
           return handler.next(options);
         },
-        onError: (DioException e, handler) {
-          return handler.next(e);
-        },
+        onResponse: (response, handler) => handler.next(response),
+        onError: (DioException e, handler) => handler.next(e),
       ),
     );
   }
 
-  Token? _getToken() => AuthLocalRepositoryImpl(
-        AuthLocalDataSourceImpl(),
-      ).getAuthToken();
-
-  updateToken() {
-    final token = _getToken();
-    _dioMainApi.options.headers['Authorization'] =
-        'Bearer ${token?.accessToken}';
-  }
-
   Future<Response> get(String url, {Map<String, dynamic>? params}) async {
-    updateToken();
     return _dioMainApi.get(
       url,
       queryParameters: params,
