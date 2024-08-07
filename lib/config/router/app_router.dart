@@ -6,6 +6,7 @@ import 'package:emotional_app/features/account/auth/ui/screens/sign_up_multi_ste
 import 'package:emotional_app/features/account/user/ui/screens/profile_view.dart';
 import 'package:emotional_app/features/history/ui/layout/history_layout.dart';
 import 'package:emotional_app/features/home/ui/layouts/home_layout.dart';
+import 'package:emotional_app/features/home/ui/screens/diary_form_screen.dart';
 import 'package:emotional_app/features/home/ui/screens/home_view.dart';
 import 'package:emotional_app/features/home/ui/screens/primary_emotion_screen.dart';
 import 'package:emotional_app/features/home/ui/screens/secondary_emotion_screen.dart';
@@ -72,6 +73,11 @@ final goRouterProvider = Provider(
                       ),
                     ),
                   ],
+                ),
+                GoRoute(
+                  path: 'diary_form_screen',
+                  name: AppRoutesName.diaryFormScreen,
+                  builder: (context, state) => const DiaryFormScreen(),
                 ),
               ],
             ),
