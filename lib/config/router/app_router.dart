@@ -8,6 +8,7 @@ import 'package:emotional_app/features/history/ui/layout/history_layout.dart';
 import 'package:emotional_app/features/home/ui/layouts/home_layout.dart';
 import 'package:emotional_app/features/home/ui/screens/home_view.dart';
 import 'package:emotional_app/features/home/ui/screens/primary_emotion_screen.dart';
+import 'package:emotional_app/features/home/ui/screens/secondary_emotion_screen.dart';
 import 'package:emotional_app/features/info/ui/screens/info_view.dart';
 import 'package:emotional_app/features/my_space/ui/screens/my_space_view.dart';
 import 'package:emotional_app/config/router/app_routes_name.dart';
@@ -57,14 +58,20 @@ final goRouterProvider = Provider(
               builder: (context, state) => const HomeView(),
               routes: [
                 GoRoute(
-                  path: 'diary',
-                  name: AppRoutesName.diaryScreen,
-                  builder: (context, state) => const PrimaryEmotionScreen(),
-                ),
-                GoRoute(
-                  path: 'transcendentalEmotions',
-                  name: AppRoutesName.transcendentalScreen,
-                  builder: (context, state) => const InfoView(),
+                  path: 'primaryEmotions/:recordType',
+                  name: AppRoutesName.primaryEmotions,
+                  builder: (context, state) => PrimaryEmotionScreen(
+                    recordType: state.pathParameters["recordType"]!,
+                  ),
+                  routes: [
+                    GoRoute(
+                      path: 'secondaryEmotions/:emotion',
+                      name: AppRoutesName.secondaryEmotions,
+                      builder: (context, state) => SecondaryEmotionScreen(
+                        emotion: state.pathParameters["emotion"]!,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
