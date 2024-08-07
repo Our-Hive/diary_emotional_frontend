@@ -65,12 +65,12 @@ class EmotionCard extends StatelessWidget {
                         ),
                         child: FilledButton(
                           style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
                             ),
-                            backgroundColor: MaterialStateProperty.all<Color>(
+                            backgroundColor: WidgetStateProperty.all<Color>(
                               primaryColor,
                             ),
                           ),
@@ -79,6 +79,7 @@ class EmotionCard extends StatelessWidget {
                             'Seleccionar',
                             style: TextStyle(
                               color: buttonTextColor,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
