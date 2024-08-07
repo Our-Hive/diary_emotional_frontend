@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class EmotionCard extends StatelessWidget {
   final String? primaryEmotion;
   final String secondaryEmotion;
+  final String? description;
   final Color primaryColor;
   final Color bgColor;
   final Color buttonTextColor;
@@ -10,6 +11,7 @@ class EmotionCard extends StatelessWidget {
   const EmotionCard({
     super.key,
     this.primaryEmotion,
+    this.description,
     required this.secondaryEmotion,
     required this.primaryColor,
     required this.bgColor,
@@ -19,11 +21,11 @@ class EmotionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final ColorScheme appColors = Theme.of(context).colorScheme;
     final String titleText = primaryEmotion != null
         ? '$primaryEmotion, $secondaryEmotion'
         : secondaryEmotion;
     return Card(
-      color: bgColor,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -31,6 +33,7 @@ class EmotionCard extends StatelessWidget {
             color: primaryColor,
             width: 3,
           ),
+          color: bgColor,
         ),
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -40,7 +43,7 @@ class EmotionCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: primaryColor,
-                  borderRadius: BorderRadius.circular(17),
+                  borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: Colors.white,
                     width: 3,
@@ -89,13 +92,39 @@ class EmotionCard extends StatelessWidget {
                   ),
                 ),
               ),
-              IconButton(
-                onPressed: () => print('info'),
-                icon: const Icon(
-                  Icons.info_outline,
-                  size: 35,
-                ),
-              )
+              description != null
+                  ? IconButton(
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(secondaryEmotion),
+                            content: Text(description!),
+                            actions: <Widget>[
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                    appColors.error,
+                                  ),
+                                  foregroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                    appColors.onError,
+                                  ),
+                                ),
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('Cerrar'),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      icon: const Icon(
+                        Icons.info_outline,
+                        size: 35,
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),

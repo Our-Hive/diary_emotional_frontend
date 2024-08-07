@@ -1,4 +1,4 @@
-import 'package:emotional_app/shared/ui/emotion_card.dart';
+import 'package:emotional_app/shared/ui/widgets/emotion_card.dart';
 import 'package:flutter/material.dart';
 
 class HistoryDiaryView extends StatelessWidget {
