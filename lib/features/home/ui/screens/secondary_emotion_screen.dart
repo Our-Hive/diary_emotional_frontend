@@ -58,6 +58,7 @@ class _SecondaryEmotionScreenState
                       secondaryEmotion: secondaryEmotions[i].name,
                       primaryColor: HexColor(secondaryEmotions[i].color),
                       description: secondaryEmotions[i].description,
+                      onTap: () => print('Tapped'),
                       bgColor: ColorUtils.darken(
                         HexColor(secondaryEmotions[i].color),
                         .6,

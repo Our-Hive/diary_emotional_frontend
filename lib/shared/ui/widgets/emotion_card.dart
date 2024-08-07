@@ -7,6 +7,7 @@ class EmotionCard extends StatelessWidget {
   final Color primaryColor;
   final Color bgColor;
   final Color buttonTextColor;
+  final Function onTap;
 
   const EmotionCard({
     super.key,
@@ -15,6 +16,7 @@ class EmotionCard extends StatelessWidget {
     required this.secondaryEmotion,
     required this.primaryColor,
     required this.bgColor,
+    required this.onTap,
     this.buttonTextColor = Colors.white,
   });
 
@@ -77,7 +79,7 @@ class EmotionCard extends StatelessWidget {
                               primaryColor,
                             ),
                           ),
-                          onPressed: () => print('Select Emotion'),
+                          onPressed: () => onTap(),
                           child: Text(
                             'Seleccionar',
                             style: TextStyle(

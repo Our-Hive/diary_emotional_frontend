@@ -6,24 +6,26 @@ class HistoryTrascendentalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             EmotionCard(
               primaryEmotion: 'Rabia',
               secondaryEmotion: 'Celos',
-              primaryColor: Color(0xFFF42A55),
-              bgColor: Color(0xFF1D0000),
+              primaryColor: const Color(0xFFF42A55),
+              bgColor: const Color(0xFF1D0000),
+              onTap: () => print('Tapped'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             EmotionCard(
               secondaryEmotion: 'Poderoso',
-              primaryColor: Color(0xFFFFD600),
-              bgColor: Color(0xFF2C1500),
-              buttonTextColor: Color(0xFF2C1500),
+              primaryColor: const Color(0xFFFFD600),
+              bgColor: const Color(0xFF2C1500),
+              buttonTextColor: const Color(0xFF2C1500),
+              onTap: () => print('Tapped'),
             ),
           ],
         ),
