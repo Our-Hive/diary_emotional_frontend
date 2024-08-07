@@ -1,11 +1,14 @@
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/home/domain/entities/Emotion.dart';
 import 'package:emotional_app/features/home/ui/providers/emotions_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hexagon/hexagon.dart';
 
 class EmotionalRoulette extends ConsumerStatefulWidget {
-  const EmotionalRoulette({super.key});
+  final String recordType;
+  const EmotionalRoulette({super.key, required this.recordType});
 
   @override
   EmotionalRouletteState createState() => EmotionalRouletteState();
@@ -110,11 +113,16 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
                       ],
                     ),
                   )
-              : () {
-                  print(
-                    'Select Emotion: ${calculateEmotionText(coordinates.q, coordinates.r)}',
-                  );
-                },
+              : () => context.pushNamed(
+                    AppRoutesName.secondaryEmotions,
+                    pathParameters: {
+                      'recordType': widget.recordType,
+                      'emotion': calculateEmotionText(
+                        coordinates.q,
+                        coordinates.r,
+                      ),
+                    },
+                  ),
           onLongPress: () => showDialog(
             context: context,
             builder: (context) => AlertDialog(

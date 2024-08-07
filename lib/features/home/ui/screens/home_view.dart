@@ -25,7 +25,10 @@ class HomeView extends StatelessWidget {
                     'Registra tus emociones que has sentido a lo largo de tu dia, con el fin de tener un control de tus emociones y diariamente ser mas consiente de ellas.',
                 height: sizeByCard,
                 imagePath: 'assets/images/diary.jpeg',
-                onTap: () => context.pushNamed(AppRoutesName.diaryScreen),
+                onTap: () => context.pushNamed(
+                  AppRoutesName.primaryEmotions,
+                  pathParameters: {'recordType': 'diary'},
+                ),
               ),
               HomeCard(
                 title: 'Emociones Trascendentales',
@@ -33,8 +36,10 @@ class HomeView extends StatelessWidget {
                     'Conoce tus emociones, creando registros de tus emociones mas relevantes, usa esta herramienta para guardar los momentos en los cuales te sientes mas emocionado o te cuesta saber que sentiste en el momento.',
                 height: sizeByCard,
                 imagePath: 'assets/images/trascendental.jpeg',
-                onTap: () =>
-                    context.pushNamed(AppRoutesName.transcendentalScreen),
+                onTap: () => context.pushNamed(
+                  AppRoutesName.primaryEmotions,
+                  pathParameters: {'recordType': 'transcendental'},
+                ),
               ),
             ],
           ),
