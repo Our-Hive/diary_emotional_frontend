@@ -1,4 +1,5 @@
 import 'package:emotional_app/features/home/ui/providers/emotions_provider.dart';
+import 'package:emotional_app/shared/ui/color/color_utils.dart';
 import 'package:emotional_app/shared/ui/color/hex_color.dart';
 import 'package:emotional_app/shared/ui/widgets/emotion_card.dart';
 import 'package:flutter/material.dart';
@@ -53,17 +54,19 @@ class _SecondaryEmotionScreenState
                       ref.watch(emotionsProvider).secondaryEmotions;
                   return ListView.separated(
                     itemCount: secondaryEmotions.length,
-                    itemBuilder: (context, index) => EmotionCard(
-                      secondaryEmotion: secondaryEmotions[index].name,
-                      primaryColor: HexColor(
-                        secondaryEmotions[index].color,
+                    itemBuilder: (context, i) => EmotionCard(
+                      secondaryEmotion: secondaryEmotions[i].name,
+                      primaryColor: HexColor(secondaryEmotions[i].color),
+                      bgColor: ColorUtils.darken(
+                        HexColor(secondaryEmotions[i].color),
+                        .6,
                       ),
-                      bgColor: Color.fromARGB(255, 45, 1, 1).withOpacity(0.2),
+                      buttonTextColor:
+                          secondaryEmotions[i].colorBrightness == 'dark'
+                              ? Colors.white
+                              : Colors.black,
                     ),
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(
-                      height: 10,
-                    ),
+                    separatorBuilder: (_, i) => const SizedBox(height: 10),
                   );
                 },
               ),
