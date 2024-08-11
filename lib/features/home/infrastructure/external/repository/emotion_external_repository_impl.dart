@@ -1,4 +1,4 @@
-import 'package:emotional_app/features/home/domain/entities/Emotion.dart';
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/home/domain/external/data_source/emotion_external_data_source.dart';
 import 'package:emotional_app/features/home/domain/external/repository/emotion_external_repository.dart';
 

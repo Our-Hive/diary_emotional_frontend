@@ -1,4 +1,4 @@
-import 'package:emotional_app/features/home/domain/entities/Emotion.dart';
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 
 abstract class EmotionExternalDataSource {
   Future<Set<Emotion>> getPrimaryEmotions();
