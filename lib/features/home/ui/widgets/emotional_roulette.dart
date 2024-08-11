@@ -1,5 +1,6 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
-import 'package:emotional_app/features/home/domain/entities/Emotion.dart';
+import 'package:emotional_app/features/daily_records/ui/providers/daily_form_provider.dart';
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/home/ui/providers/emotions_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,21 +21,21 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
 
   Set<Emotion> emotions = <Emotion>{};
 
-  String calculateEmotionText(int q, int r) {
+  Emotion? calculateEmotionText(int q, int r) {
     if (q == 1 && r == 0 && emotions.isNotEmpty) {
-      return emotions.elementAt(0).name;
+      return emotions.elementAt(0);
     } else if (q == 1 && r == -1 && emotions.isNotEmpty) {
-      return emotions.elementAt(1).name;
+      return emotions.elementAt(1);
     } else if (q == 0 && r == -1 && emotions.isNotEmpty) {
-      return emotions.elementAt(2).name;
+      return emotions.elementAt(2);
     } else if (q == -1 && r == 0 && emotions.isNotEmpty) {
-      return emotions.elementAt(3).name;
+      return emotions.elementAt(3);
     } else if (q == -1 && r == 1 && emotions.isNotEmpty) {
-      return emotions.elementAt(4).name;
+      return emotions.elementAt(4);
     } else if (q == 0 && r == 1 && emotions.isNotEmpty) {
-      return emotions.elementAt(5).name;
+      return emotions.elementAt(5);
     }
-    return '';
+    return null;
   }
 
   String calculateEmotionDescription(int q, int r) {
@@ -92,13 +93,11 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
         hexType: type,
         depth: depth,
         buildChild: (coordinates) => GestureDetector(
-          onTap: calculateEmotionText(coordinates.q, coordinates.r).isEmpty
+          onTap: calculateEmotionText(coordinates.q, coordinates.r) == null
               ? () => showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text(
-                        calculateEmotionText(coordinates.q, coordinates.r),
-                      ),
+                      title: const Text(''),
                       content: Text(
                         calculateEmotionDescription(
                           coordinates.q,
@@ -113,21 +112,34 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
                       ],
                     ),
                   )
-              : () => context.pushNamed(
+              : () {
+                  widget.recordType == "diary"
+                      ? ref
+                          .read(dailyFormProvider.notifier)
+                          .onPrimaryEmotionSelect(
+                            calculateEmotionText(
+                              coordinates.q,
+                              coordinates.r,
+                            )!,
+                          )
+                      : print('todo');
+                  context.pushNamed(
                     AppRoutesName.secondaryEmotions,
                     pathParameters: {
                       'recordType': widget.recordType,
                       'emotion': calculateEmotionText(
-                        coordinates.q,
-                        coordinates.r,
-                      ),
+                            coordinates.q,
+                            coordinates.r,
+                          )?.name ??
+                          '',
                     },
-                  ),
+                  );
+                },
           onLongPress: () => showDialog(
             context: context,
             builder: (context) => AlertDialog(
               title: Text(
-                calculateEmotionText(coordinates.q, coordinates.r),
+                calculateEmotionText(coordinates.q, coordinates.r)?.name ?? '',
               ),
               content: Text(
                 calculateEmotionDescription(coordinates.q, coordinates.r),
@@ -148,7 +160,7 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
             cornerRadius: 8.0,
             elevation: 10.0,
             type: type,
-            child: calculateEmotionText(coordinates.q, coordinates.r).isEmpty
+            child: calculateEmotionText(coordinates.q, coordinates.r) == null
                 ? const Icon(
                     Icons.info,
                     size: 40.0,
@@ -156,7 +168,7 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
                   )
                 : FittedBox(
                     child: Text(
-                      calculateEmotionText(coordinates.q, coordinates.r),
+                      calculateEmotionText(coordinates.q, coordinates.r)!.name,
                       style: const TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,

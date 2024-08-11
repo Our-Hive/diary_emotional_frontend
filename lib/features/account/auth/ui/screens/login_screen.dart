@@ -90,7 +90,9 @@ class LoginScreen extends ConsumerWidget {
                     thickness: 2,
                   ),
                   TextButton(
-                    onPressed: () => context.go(AppRoutesName.signUpAccount),
+                    onPressed: () => context.goNamed(
+                      AppRoutesName.signUpAccount,
+                    ),
                     child: const Column(
                       children: <Text>[
                         Text('¿No puedes iniciar sesión?'),

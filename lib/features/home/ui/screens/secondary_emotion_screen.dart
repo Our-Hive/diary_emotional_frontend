@@ -1,15 +1,21 @@
+import 'package:emotional_app/config/router/app_routes_name.dart';
+import 'package:emotional_app/features/daily_records/ui/providers/daily_form_provider.dart';
 import 'package:emotional_app/features/home/ui/providers/emotions_provider.dart';
 import 'package:emotional_app/shared/ui/color/color_utils.dart';
 import 'package:emotional_app/shared/ui/color/hex_color.dart';
 import 'package:emotional_app/shared/ui/widgets/emotion_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SecondaryEmotionScreen extends ConsumerStatefulWidget {
   final String emotion;
+  final String recordType;
+
   const SecondaryEmotionScreen({
     super.key,
     required this.emotion,
+    required this.recordType,
   });
 
   @override
@@ -58,7 +64,22 @@ class _SecondaryEmotionScreenState
                       secondaryEmotion: secondaryEmotions[i].name,
                       primaryColor: HexColor(secondaryEmotions[i].color),
                       description: secondaryEmotions[i].description,
-                      onTap: () => print('Tapped'),
+                      onTap: () {
+                        if (widget.recordType == "diary") {
+                          final emotionSelected = secondaryEmotions[i];
+                          ref
+                              .read(dailyFormProvider.notifier)
+                              .onSecondaryEmotionSelect(emotionSelected);
+                          context.pushNamed(
+                            AppRoutesName.diaryFormScreen,
+                            pathParameters: {
+                              'recordType': widget.recordType,
+                              'emotion': widget.emotion,
+                            },
+                          );
+                        }
+                        print('todo');
+                      },
                       bgColor: ColorUtils.darken(
                         HexColor(secondaryEmotions[i].color),
                         .6,
