@@ -1,5 +1,6 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/home/ui/widgets/home_card.dart';
+import 'package:emotional_app/shared/domain/records/record_types.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,7 +28,7 @@ class HomeView extends StatelessWidget {
                 imagePath: 'assets/images/diary.jpeg',
                 onTap: () => context.pushNamed(
                   AppRoutesName.primaryEmotions,
-                  pathParameters: {'recordType': 'diary'},
+                  pathParameters: {'recordType': RecordTypes.daily},
                 ),
               ),
               HomeCard(
@@ -38,7 +39,7 @@ class HomeView extends StatelessWidget {
                 imagePath: 'assets/images/trascendental.jpeg',
                 onTap: () => context.pushNamed(
                   AppRoutesName.primaryEmotions,
-                  pathParameters: {'recordType': 'transcendental'},
+                  pathParameters: {'recordType': RecordTypes.transcendental},
                 ),
               ),
             ],

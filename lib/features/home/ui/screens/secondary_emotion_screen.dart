@@ -1,6 +1,8 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/daily_records/ui/providers/daily_form_provider.dart';
 import 'package:emotional_app/features/home/ui/providers/emotions_provider.dart';
+import 'package:emotional_app/features/trascendental_records/ui/providers/trascendental_record_provider.dart';
+import 'package:emotional_app/shared/domain/records/record_types.dart';
 import 'package:emotional_app/shared/ui/color/color_utils.dart';
 import 'package:emotional_app/shared/ui/color/hex_color.dart';
 import 'package:emotional_app/shared/ui/widgets/emotion_card.dart';
@@ -65,7 +67,7 @@ class _SecondaryEmotionScreenState
                       primaryColor: HexColor(secondaryEmotions[i].color),
                       description: secondaryEmotions[i].description,
                       onTap: () {
-                        if (widget.recordType == "diary") {
+                        if (widget.recordType == RecordTypes.daily) {
                           final emotionSelected = secondaryEmotions[i];
                           ref
                               .read(dailyFormProvider.notifier)
@@ -78,7 +80,19 @@ class _SecondaryEmotionScreenState
                             },
                           );
                         }
-                        print('todo');
+                        if (widget.recordType == RecordTypes.transcendental) {
+                          final emotionSelected = secondaryEmotions[i];
+                          ref
+                              .read(trascendentalFormProvider.notifier)
+                              .onSecondaryEmotionSelect(emotionSelected);
+                          context.pushNamed(
+                            AppRoutesName.trascendentalFormScreen,
+                            pathParameters: {
+                              'recordType': widget.recordType,
+                              'emotion': widget.emotion,
+                            },
+                          );
+                        }
                       },
                       bgColor: ColorUtils.darken(
                         HexColor(secondaryEmotions[i].color),

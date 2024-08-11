@@ -6,7 +6,7 @@ abstract class AppRoutesName {
   static const primaryEmotions = 'primary_emotions_screen';
   static const secondaryEmotions = 'secondary_emotions_screen';
   static const diaryFormScreen = 'diary_form_screen';
-  static const transcendentalFormScreen = 'transcendental_form_screen';
+  static const trascendentalFormScreen = 'trascendental_form_screen';
   static const profileView = 'profile_view';
   static const historyView = 'history_view';
   static const infoView = 'info_view';

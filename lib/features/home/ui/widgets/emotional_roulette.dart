@@ -2,6 +2,8 @@ import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/daily_records/ui/providers/daily_form_provider.dart';
 import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/home/ui/providers/emotions_provider.dart';
+import 'package:emotional_app/features/trascendental_records/ui/providers/trascendental_record_provider.dart';
+import 'package:emotional_app/shared/domain/records/record_types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -113,16 +115,25 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
                     ),
                   )
               : () {
-                  widget.recordType == "diary"
-                      ? ref
-                          .read(dailyFormProvider.notifier)
-                          .onPrimaryEmotionSelect(
-                            calculateEmotionText(
-                              coordinates.q,
-                              coordinates.r,
-                            )!,
-                          )
-                      : print('todo');
+                  if (widget.recordType == RecordTypes.daily) {
+                    ref.read(dailyFormProvider.notifier).onPrimaryEmotionSelect(
+                          calculateEmotionText(
+                            coordinates.q,
+                            coordinates.r,
+                          )!,
+                        );
+                  }
+                  if (widget.recordType == RecordTypes.transcendental) {
+                    ref
+                        .read(trascendentalFormProvider.notifier)
+                        .onPrimaryEmotionSelect(
+                          calculateEmotionText(
+                            coordinates.q,
+                            coordinates.r,
+                          )!,
+                        );
+                  }
+
                   context.pushNamed(
                     AppRoutesName.secondaryEmotions,
                     pathParameters: {

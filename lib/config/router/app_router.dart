@@ -13,6 +13,7 @@ import 'package:emotional_app/features/home/ui/screens/secondary_emotion_screen.
 import 'package:emotional_app/features/info/ui/screens/info_view.dart';
 import 'package:emotional_app/features/my_space/ui/screens/my_space_view.dart';
 import 'package:emotional_app/config/router/app_routes_name.dart';
+import 'package:emotional_app/features/trascendental_records/ui/screens/trascendental_record_form_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -77,6 +78,14 @@ final goRouterProvider = Provider(
                           path: 'diary_form_screen',
                           name: AppRoutesName.diaryFormScreen,
                           builder: (context, state) => DailyFormScreen(
+                            recordType: state.pathParameters["recordType"]!,
+                            emotion: state.pathParameters["emotion"]!,
+                          ),
+                        ),
+                        GoRoute(
+                          path: 'trascendental_form_screen',
+                          name: AppRoutesName.trascendentalFormScreen,
+                          builder: (context, state) => TrascendentalRecordFormScreen(
                             recordType: state.pathParameters["recordType"]!,
                             emotion: state.pathParameters["emotion"]!,
                           ),
