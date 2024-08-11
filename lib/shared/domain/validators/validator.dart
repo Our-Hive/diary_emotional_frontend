@@ -5,7 +5,6 @@ class Validators {
     return emailRegExp.hasMatch(email);
   }
 
-  // todo: 7 to password | 3 to username
   static bool isMinLength(String string, int length) {
     return string.length >= length;
   }

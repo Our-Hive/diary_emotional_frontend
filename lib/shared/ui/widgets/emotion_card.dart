@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EmotionCard extends StatelessWidget {
+class EmotionCard extends ConsumerWidget {
   final String? primaryEmotion;
   final String secondaryEmotion;
   final String? description;
   final Color primaryColor;
   final Color bgColor;
   final Color buttonTextColor;
-  final Function onTap;
-
+  final void Function() onTap;
   const EmotionCard({
     super.key,
     this.primaryEmotion,
@@ -21,7 +21,7 @@ class EmotionCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final ColorScheme appColors = Theme.of(context).colorScheme;
     final String titleText = primaryEmotion != null
@@ -79,8 +79,9 @@ class EmotionCard extends StatelessWidget {
                               primaryColor,
                             ),
                           ),
-                          onPressed: () => onTap(),
-                          child: Text(
+                          onPressed: onTap,
+                          child: 
+                          Text(
                             'Seleccionar',
                             style: TextStyle(
                               color: buttonTextColor,

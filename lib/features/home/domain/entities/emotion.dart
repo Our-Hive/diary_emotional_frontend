@@ -10,4 +10,13 @@ class Emotion {
     required this.color,
     required this.colorBrightness,
   });
+
+  factory Emotion.empty() {
+    return Emotion(
+      name: '',
+      description: '',
+      color: '',
+      colorBrightness: '',
+    );
+  }
 }

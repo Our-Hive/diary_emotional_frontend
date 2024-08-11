@@ -9,7 +9,7 @@ class PrimaryEmotionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Primary Emotion'),
+        title: const Text('Emoción primaria'),
       ),
       body: Center(
         child: Column(
