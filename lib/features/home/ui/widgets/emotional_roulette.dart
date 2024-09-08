@@ -1,8 +1,8 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
-import 'package:emotional_app/features/daily_records/ui/providers/daily_form_provider.dart';
+import 'package:emotional_app/features/records/daily_records/ui/providers/daily_form_provider.dart';
 import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/home/ui/providers/emotions_provider.dart';
-import 'package:emotional_app/features/trascendental_records/ui/providers/trascendental_record_provider.dart';
+import 'package:emotional_app/features/records/trascendental_records/ui/providers/trascendental_record_provider.dart';
 import 'package:emotional_app/shared/domain/records/record_types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

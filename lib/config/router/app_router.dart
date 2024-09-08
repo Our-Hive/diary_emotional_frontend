@@ -4,16 +4,16 @@ import 'package:emotional_app/features/account/auth/ui/screens/login_screen.dart
 import 'package:emotional_app/features/account/auth/ui/screens/sign_up_multi_step/step_account_screen.dart';
 import 'package:emotional_app/features/account/auth/ui/screens/sign_up_multi_step/step_contact_screen.dart';
 import 'package:emotional_app/features/account/user/ui/screens/profile_view.dart';
-import 'package:emotional_app/features/history/ui/layout/history_layout.dart';
+import 'package:emotional_app/features/records/history/ui/layout/history_layout.dart';
 import 'package:emotional_app/features/home/ui/layouts/home_layout.dart';
-import 'package:emotional_app/features/daily_records/ui/screens/daily_form_screen.dart';
+import 'package:emotional_app/features/records/daily_records/ui/screens/daily_form_screen.dart';
 import 'package:emotional_app/features/home/ui/screens/home_view.dart';
 import 'package:emotional_app/features/home/ui/screens/primary_emotion_screen.dart';
 import 'package:emotional_app/features/home/ui/screens/secondary_emotion_screen.dart';
 import 'package:emotional_app/features/info/ui/screens/info_view.dart';
 import 'package:emotional_app/features/my_space/ui/screens/my_space_view.dart';
 import 'package:emotional_app/config/router/app_routes_name.dart';
-import 'package:emotional_app/features/trascendental_records/ui/screens/trascendental_record_form_screen.dart';
+import 'package:emotional_app/features/records/trascendental_records/ui/screens/trascendental_record_form_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
