@@ -7,7 +7,7 @@ class EmotionCard extends ConsumerWidget {
   final String? description;
   final Color primaryColor;
   final Color bgColor;
-  final Color buttonTextColor;
+  final Color textColor;
   final void Function() onTap;
   const EmotionCard({
     super.key,
@@ -17,7 +17,7 @@ class EmotionCard extends ConsumerWidget {
     required this.primaryColor,
     required this.bgColor,
     required this.onTap,
-    this.buttonTextColor = Colors.white,
+    this.textColor = Colors.white,
   });
 
   @override
@@ -61,7 +61,11 @@ class EmotionCard extends ConsumerWidget {
                     children: <Widget>[
                       Text(
                         titleText,
-                        style: textTheme.titleMedium,
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: textTheme.titleLarge?.fontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -80,11 +84,10 @@ class EmotionCard extends ConsumerWidget {
                             ),
                           ),
                           onPressed: onTap,
-                          child: 
-                          Text(
+                          child: Text(
                             'Seleccionar',
                             style: TextStyle(
-                              color: buttonTextColor,
+                              color: textColor,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -105,17 +108,10 @@ class EmotionCard extends ConsumerWidget {
                             content: Text(description!),
                             actions: <Widget>[
                               TextButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      WidgetStateProperty.all<Color>(
-                                    appColors.error,
-                                  ),
-                                  foregroundColor:
-                                      WidgetStateProperty.all<Color>(
-                                    appColors.onError,
-                                  ),
-                                ),
                                 onPressed: () => Navigator.of(context).pop(),
+                                style: TextButton.styleFrom(
+                                  foregroundColor: appColors.error,
+                                ),
                                 child: const Text('Cerrar'),
                               ),
                             ],

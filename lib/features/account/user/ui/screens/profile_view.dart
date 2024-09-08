@@ -5,7 +5,7 @@ import 'package:emotional_app/features/account/user/domain/entities/user.dart';
 import 'package:emotional_app/features/account/user/ui/provider/disable_form_provider.dart';
 import 'package:emotional_app/features/account/user/ui/provider/user_provider.dart';
 import 'package:emotional_app/shared/domain/utils/date_time_formatter.dart';
-import 'package:flutter/foundation.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_multicolor_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -64,24 +64,9 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 5),
-                  if (kIsWeb)
-                    Image.asset(
-                      'assets/app_image_yellow.png',
-                      width: 120,
-                      height: 120,
-                    )
-                  else
-                    ImageFiltered(
-                      imageFilter: ColorFilter.mode(
-                        RandomColor.generate(),
-                        BlendMode.srcATop,
-                      ),
-                      child: const Image(
-                        image: AssetImage('assets/app_image.png'),
-                        width: 120,
-                        height: 120,
-                      ),
-                    ),
+                  OurHiveColorIcon(
+                    color: RandomColor.generate(),
+                  ),
                   const SizedBox(height: 15),
                   Text(
                     'Hola\r${user.firstName}\r${user.lastName}',
