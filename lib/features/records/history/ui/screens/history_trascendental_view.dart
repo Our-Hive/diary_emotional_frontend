@@ -24,7 +24,7 @@ class HistoryTrascendentalView extends StatelessWidget {
               secondaryEmotion: 'Poderoso',
               primaryColor: const Color(0xFFFFD600),
               bgColor: const Color(0xFF2C1500),
-              buttonTextColor: const Color(0xFF2C1500),
+              textColor: const Color(0xFF2C1500),
               onTap: () => print('Tapped'),
             ),
           ],

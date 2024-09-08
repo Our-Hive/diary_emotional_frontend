@@ -1,6 +1,6 @@
-import 'package:emotional_app/features/history/ui/screens/history_all_view.dart';
-import 'package:emotional_app/features/history/ui/screens/history_diary_view.dart';
-import 'package:emotional_app/features/history/ui/screens/history_trascendental_view.dart';
+import 'package:emotional_app/features/records/history/ui/screens/history_all_view.dart';
+import 'package:emotional_app/features/records/history/ui/screens/history_diary_view.dart';
+import 'package:emotional_app/features/records/history/ui/screens/history_trascendental_view.dart';
 import 'package:flutter/material.dart';
 
 class HistoryLayout extends StatelessWidget {

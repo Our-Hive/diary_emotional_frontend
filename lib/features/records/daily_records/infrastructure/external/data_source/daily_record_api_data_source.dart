@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:emotional_app/config/http/app_http_singleton.dart';
-import 'package:emotional_app/features/daily_records/domain/external/data_source/daily_record_external_data_source.dart';
-import 'package:emotional_app/features/daily_records/infrastructure/external/exceptions/cant_create_record_exception.dart';
-import 'package:emotional_app/features/daily_records/infrastructure/external/exceptions/invalid_emotion_selected_exception.dart';
+import 'package:emotional_app/features/records/daily_records/domain/external/data_source/daily_record_external_data_source.dart';
+import 'package:emotional_app/features/records/daily_records/infrastructure/external/exceptions/cant_create_record_exception.dart';
+import 'package:emotional_app/features/records/daily_records/infrastructure/external/exceptions/invalid_emotion_selected_exception.dart';
 
 class DailyRecordApiDataSource implements DailyRecordExternalDataSource {
   DailyRecordApiDataSource();

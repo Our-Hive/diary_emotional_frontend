@@ -1,5 +1,5 @@
-import 'package:emotional_app/features/daily_records/domain/external/data_source/daily_record_external_data_source.dart';
-import 'package:emotional_app/features/daily_records/domain/external/repository/daily_record_external_repository.dart';
+import 'package:emotional_app/features/records/daily_records/domain/external/data_source/daily_record_external_data_source.dart';
+import 'package:emotional_app/features/records/daily_records/domain/external/repository/daily_record_external_repository.dart';
 
 class DailyRecordsExternalRepositoryImpl
     implements DailyRecordExternalRepository {

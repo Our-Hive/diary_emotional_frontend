@@ -1,8 +1,8 @@
-import 'package:emotional_app/features/daily_records/domain/external/repository/daily_record_external_repository.dart';
-import 'package:emotional_app/features/daily_records/infrastructure/external/data_source/daily_record_api_data_source.dart';
-import 'package:emotional_app/features/daily_records/infrastructure/external/exceptions/cant_create_record_exception.dart';
-import 'package:emotional_app/features/daily_records/infrastructure/external/exceptions/invalid_emotion_selected_exception.dart';
-import 'package:emotional_app/features/daily_records/infrastructure/external/repository/daily_records_external_repository_impl.dart';
+import 'package:emotional_app/features/records/daily_records/domain/external/repository/daily_record_external_repository.dart';
+import 'package:emotional_app/features/records/daily_records/infrastructure/external/data_source/daily_record_api_data_source.dart';
+import 'package:emotional_app/features/records/daily_records/infrastructure/external/exceptions/cant_create_record_exception.dart';
+import 'package:emotional_app/features/records/daily_records/infrastructure/external/exceptions/invalid_emotion_selected_exception.dart';
+import 'package:emotional_app/features/records/daily_records/infrastructure/external/repository/daily_records_external_repository_impl.dart';
 import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
