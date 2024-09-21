@@ -1,21 +1,17 @@
-import 'package:emotional_app/features/home/domain/entities/emotion.dart';
+import 'package:emotional_app/features/records/record/domain/entities/record.dart';
 
-class TrascendentalRecord {
-  final Emotion primaryEmotion;
-  final Emotion secondaryEmotion;
-  final DateTime createdAt;
+class TrascendentalRecord extends Record {
   final String location;
   final String activity;
-  final String companion;
-  final String description;
+  final String companions;
 
   TrascendentalRecord({
-    required this.primaryEmotion,
-    required this.secondaryEmotion,
-    required this.createdAt,
+    required super.id,
+    required super.primaryEmotion,
+    required super.secondaryEmotion,
+    required super.date,
     required this.location,
     required this.activity,
-    required this.companion,
-    required this.description,
+    required this.companions,
   });
 }

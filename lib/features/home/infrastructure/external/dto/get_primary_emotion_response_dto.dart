@@ -1,8 +1,11 @@
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
+import 'package:emotional_app/shared/infrastructure/http/emotion_parser.dart';
+
 class GetPrimaryEmotionResponseDto {
   final String name;
   final String description;
   final String color;
-  final String theme;
+  final EmotionTheme theme;
   final dynamic secondaryEmotions;
 
   GetPrimaryEmotionResponseDto({
@@ -18,7 +21,7 @@ class GetPrimaryEmotionResponseDto {
         name: json["name"],
         description: json["description"],
         color: json["color"],
-        theme: json["theme"],
+        theme: themeValues.map[json["theme"]]!,
         secondaryEmotions: json["secondaryEmotions"],
       );
 
@@ -26,7 +29,7 @@ class GetPrimaryEmotionResponseDto {
         "name": name,
         "description": description,
         "color": color,
-        "theme": theme,
+        "theme": themeValues.reverse[theme],
         "secondaryEmotions": secondaryEmotions,
       };
 }

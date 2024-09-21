@@ -1,3 +1,6 @@
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
+import 'package:emotional_app/shared/infrastructure/http/emotion_parser.dart';
+
 class GetSecondaryEmotionResponseDto {
   final String name;
   final String description;
@@ -29,7 +32,7 @@ class SecondaryEmotion {
   final String name;
   final String description;
   final String color;
-  final String theme;
+  final EmotionTheme theme;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final dynamic deletedAt;
@@ -49,7 +52,7 @@ class SecondaryEmotion {
         name: json["name"],
         description: json["description"],
         color: json["color"],
-        theme: json["theme"],
+        theme: themeValues.map[json["theme"]]!,
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         deletedAt: json["deletedAt"],
@@ -59,7 +62,7 @@ class SecondaryEmotion {
         "name": name,
         "description": description,
         "color": color,
-        "theme": theme,
+        "theme": themeValues.reverse[theme],
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "deletedAt": deletedAt,

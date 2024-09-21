@@ -18,7 +18,8 @@ class EmotionsApiMapper {
           .toList();
 
   static List<Emotion> fromGetSecondaryEmotionResponseDto(
-          GetSecondaryEmotionResponseDto dto) =>
+    GetSecondaryEmotionResponseDto dto,
+  ) =>
       dto.secondaryEmotions
           .map((e) => Emotion(
                 name: e.name,
