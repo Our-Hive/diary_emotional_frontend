@@ -115,7 +115,7 @@ class DailyFormScreen extends ConsumerWidget {
                     .read(dailyFormProvider.notifier)
                     .onDescriptionChange(value),
               ),
-              ElevatedButton(
+              FilledButton(
                 onPressed: () =>
                     ref.read(dailyFormProvider.notifier).onFormSubmit(),
                 child: const Padding(

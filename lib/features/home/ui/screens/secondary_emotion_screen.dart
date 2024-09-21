@@ -1,4 +1,5 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/records/daily_records/ui/providers/daily_form_provider.dart';
 import 'package:emotional_app/features/home/ui/providers/emotions_provider.dart';
 import 'package:emotional_app/features/records/trascendental_records/ui/providers/trascendental_record_provider.dart';
@@ -62,7 +63,8 @@ class _SecondaryEmotionScreenState
                       ref.watch(emotionsProvider).secondaryEmotions;
                   return ListView.separated(
                     itemCount: secondaryEmotions.length,
-                    itemBuilder: (context, i) => EmotionCard(
+                    separatorBuilder: (_, i) => const SizedBox(height: 10),
+                    itemBuilder: (_, i) => EmotionCard(
                       secondaryEmotion: secondaryEmotions[i].name,
                       primaryColor: HexColor(secondaryEmotions[i].color),
                       description: secondaryEmotions[i].description,
@@ -98,11 +100,11 @@ class _SecondaryEmotionScreenState
                         HexColor(secondaryEmotions[i].color),
                         .2,
                       ),
-                      textColor: secondaryEmotions[i].colorBrightness == 'dark'
+                      textColor: secondaryEmotions[i].colorBrightness ==
+                              EmotionTheme.DARK
                           ? Colors.white
                           : Colors.black,
                     ),
-                    separatorBuilder: (_, i) => const SizedBox(height: 10),
                   );
                 },
               ),

@@ -9,6 +9,7 @@ abstract class AppRoutesName {
   static const trascendentalFormScreen = 'trascendental_form_screen';
   static const profileView = 'profile_view';
   static const historyView = 'history_view';
+  static const recordDetail = 'record_detail';
   static const infoView = 'info_view';
   static const mySpaceView = 'mySpace_view';
 }

@@ -22,6 +22,23 @@ class TrascendentalRecordFormScreen extends ConsumerWidget {
       (_, state) {
         if (state.status == TrascendentalFormStatus.success) {
           context.goNamed(AppRoutesName.homeView);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: HexColor(
+                ref
+                    .watch(trascendentalFormProvider)
+                    .primaryEmotionSelected
+                    .color,
+              ),
+              content: const Text(
+                'Registro guardado con éxito',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
         }
       },
     );

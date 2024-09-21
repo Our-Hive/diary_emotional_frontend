@@ -1,15 +1,13 @@
-import 'package:emotional_app/features/home/domain/entities/emotion.dart';
+import 'package:emotional_app/features/records/record/domain/entities/record.dart';
 
-class DailyRecord {
-  Emotion primaryEmotion;
-  Emotion secondaryEmotion;
-  DateTime createdAt;
-  String description;
+class DailyRecord extends Record {
+  final String description;
 
   DailyRecord({
-    required this.primaryEmotion,
-    required this.secondaryEmotion,
-    required this.createdAt,
+    required super.id,
+    required super.primaryEmotion,
+    required super.secondaryEmotion,
+    required super.date,
     required this.description,
   });
 }

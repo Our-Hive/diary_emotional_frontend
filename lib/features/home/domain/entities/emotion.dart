@@ -2,7 +2,7 @@ class Emotion {
   final String name;
   final String description;
   final String color;
-  final String colorBrightness;
+  final EmotionTheme colorBrightness;
 
   Emotion({
     required this.name,
@@ -16,7 +16,9 @@ class Emotion {
       name: '',
       description: '',
       color: '',
-      colorBrightness: '',
+      colorBrightness: EmotionTheme.LIGHT,
     );
   }
 }
+
+enum EmotionTheme { DARK, LIGHT }

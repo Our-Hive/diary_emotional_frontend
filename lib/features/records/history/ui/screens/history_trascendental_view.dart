@@ -1,34 +1,51 @@
+import 'package:emotional_app/features/home/ui/widgets/emotional_roulette.dart';
+import 'package:emotional_app/features/records/history/ui/providers/history_provider.dart';
+import 'package:emotional_app/shared/ui/color/color_utils.dart';
 import 'package:emotional_app/shared/ui/widgets/emotion_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:emotional_app/features/records/record/domain/entities/record.dart';
 
-class HistoryTrascendentalView extends StatelessWidget {
+class HistoryTrascendentalView extends ConsumerStatefulWidget {
   const HistoryTrascendentalView({super.key});
 
   @override
+  HistoryAllViewState createState() => HistoryAllViewState();
+}
+
+class HistoryAllViewState extends ConsumerState<HistoryTrascendentalView> {
+  @override
+  void initState() {
+    ref.read(historyProvider.notifier).getHistory();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final List<Record> records = ref.watch(historyProvider).dailyRecords;
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            EmotionCard(
-              primaryEmotion: 'Rabia',
-              secondaryEmotion: 'Celos',
-              primaryColor: const Color(0xFFF42A55),
-              bgColor: const Color(0xFF1D0000),
-              onTap: () => print('Tapped'),
+        child: ListView.builder(itemBuilder: (_, i) {
+          return EmotionCard(
+            primaryEmotion: records[i].primaryEmotion.name,
+            secondaryEmotion: records[i].secondaryEmotion.name,
+            primaryColor: HexColor(records[i].primaryEmotion.color),
+            onTap: () => print('Tapped'),
+            bgColor: ColorUtils.darken(
+              HexColor(records[i].primaryEmotion.color),
+              .2,
             ),
-            const SizedBox(height: 10),
-            EmotionCard(
-              secondaryEmotion: 'Poderoso',
-              primaryColor: const Color(0xFFFFD600),
-              bgColor: const Color(0xFF2C1500),
-              textColor: const Color(0xFF2C1500),
-              onTap: () => print('Tapped'),
-            ),
-          ],
-        ),
+            textColor: records[i].primaryEmotion.colorBrightness == 'dark'
+                ? Colors.white
+                : Colors.black,
+          );
+        }),
       ),
     );
   }
