@@ -27,14 +27,41 @@ class HistoryApiDataSourceImpl implements HistoryExternalDataSource {
   }
 
   @override
-  Future<List<DailyRecord>> getDailyHistory({int page = 0}) {
-    // TODO: implement getDailyHistory
-    throw UnimplementedError();
+  Future<List<DailyRecord>> getDailyHistory({int page = 0}) async {
+    try {
+      final response = await AppHttpSingleton().get(
+        '/emotional-records/daily',
+        params: {
+          'page': page,
+        },
+      );
+      final List<GetRecordHistoryResponseDto> dto = (response.data as List)
+          .map((e) => GetRecordHistoryResponseDto.fromJson(e))
+          .toList();
+      return RecordHistoryMapper.fromGetRecordHistoryResponseDto(dto);
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 
   @override
-  Future<List<TrascendentalRecord>> getTrascendentalHistory({int page = 0}) {
-    // TODO: implement getWeeklyHistory
-    throw UnimplementedError();
+  Future<List<TrascendentalRecord>> getTrascendentalHistory(
+      {int page = 0}) async {
+    try {
+      final response = await AppHttpSingleton().get(
+        '/emotional-records/transcendental',
+        params: {
+          'page': page,
+        },
+      );
+      final List<GetRecordHistoryResponseDto> dto = (response.data as List)
+          .map((e) => GetRecordHistoryResponseDto.fromJson(e))
+          .toList();
+      return RecordHistoryMapper.fromGetRecordHistoryResponseDto(dto);
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 }
