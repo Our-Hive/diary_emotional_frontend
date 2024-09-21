@@ -17,6 +17,7 @@ final historyProvider = StateNotifierProvider<HistoryNotifier, HistoryState>(
 class HistoryNotifier extends StateNotifier<HistoryState> {
   final HistoryExternalRepository _historyRepository;
   int currentPage = 0;
+  // todo: remove this verifying if it's the last page.
   bool maxPage = false;
 
   HistoryNotifier({
