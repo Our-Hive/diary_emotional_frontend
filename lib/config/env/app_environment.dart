@@ -6,4 +6,6 @@ class AppEnvironment {
   }
 
   static String apiUrl = dotenv.env['API_URL'] ?? "Unconfigured Environment";
+  static String goApiUrl =
+      dotenv.env['GO_API_URL'] ?? "Unconfigured Environment";
 }
