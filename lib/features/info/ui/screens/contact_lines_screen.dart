@@ -29,25 +29,31 @@ class _ContactLinesScreenState extends ConsumerState<ContactLinesScreen> {
       appBar: AppBar(
         title: const Text('Lineas de Contacto'),
       ),
-      body: state.contactLines.isNotEmpty
-          ? ListView.separated(
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) {
-                final content = state.contactLines[index];
-                return ListTile(
-                  title: Text(content.title),
-                  subtitle: Text(content.description),
-                );
-              },
-              itemCount: state.contactLines.length,
-            )
-          : state.error.isNotEmpty
-              ? Center(
-                  child: Text(state.error),
-                )
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ),
+        child: state.contactLines.isNotEmpty
+            ? ListView.separated(
+                separatorBuilder: (context, index) => const Divider(),
+                itemBuilder: (context, index) {
+                  final content = state.contactLines[index];
+                  return ListTile(
+                    title: Text(content.title),
+                    subtitle: Text(content.description),
+                  );
+                },
+                itemCount: state.contactLines.length,
+              )
+            : state.error.isNotEmpty
+                ? Center(
+                    child: Text(state.error),
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+      ),
     );
   }
 }

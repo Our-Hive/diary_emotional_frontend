@@ -21,8 +21,7 @@ class ContactLineNotifier extends StateNotifier<ContactLineState> {
     required contactLineExternalRepo,
   }) : _contactLineExternalRepo = contactLineExternalRepo;
 
-  void getContactLines() async {
-    state = state.copyWith(isLoading: true);
+  Future<void> getContactLines() async {
     try {
       final contactLines = await _contactLineExternalRepo.getContactLine();
       state = state.copyWith(contactLines: contactLines);

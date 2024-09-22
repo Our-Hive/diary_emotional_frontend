@@ -23,7 +23,6 @@ class RecommendedContentNotifier
   }) : _contactLineExternalRepo = contactLineExternalRepo;
 
   void getRecommendedContent() async {
-    state = state.copyWith(isLoading: true);
     try {
       final recommendedList =
           await _contactLineExternalRepo.getRecommendedContent();

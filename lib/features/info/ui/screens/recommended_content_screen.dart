@@ -32,26 +32,32 @@ class _RecommendedContentScreenState
       appBar: AppBar(
         title: const Text('Recomendaciones'),
       ),
-      body: state.recommendedContentList.isNotEmpty
-          ? ListView.separated(
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) {
-                final content = state.recommendedContentList[index];
-                return ListTile(
-                  title: Text(content.title),
-                  subtitle: Text(content.description),
-                  onTap: () async => await launchUrl(Uri.parse(content.url)),
-                );
-              },
-              itemCount: state.recommendedContentList.length,
-            )
-          : state.error.isNotEmpty
-              ? Center(
-                  child: Text(state.error),
-                )
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ),
+        child: state.recommendedContentList.isNotEmpty
+            ? ListView.separated(
+                separatorBuilder: (context, index) => const Divider(),
+                itemBuilder: (context, index) {
+                  final content = state.recommendedContentList[index];
+                  return ListTile(
+                    title: Text(content.title),
+                    subtitle: Text(content.description),
+                    onTap: () async => await launchUrl(Uri.parse(content.url)),
+                  );
+                },
+                itemCount: state.recommendedContentList.length,
+              )
+            : state.error.isNotEmpty
+                ? Center(
+                    child: Text(state.error),
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+      ),
     );
   }
 }
