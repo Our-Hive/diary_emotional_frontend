@@ -1,3 +1,4 @@
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/home/ui/widgets/emotional_roulette.dart';
 import 'package:emotional_app/features/records/history/ui/providers/history_provider.dart';
 import 'package:emotional_app/shared/ui/color/color_utils.dart';
@@ -41,9 +42,10 @@ class HistoryAllViewState extends ConsumerState<HistoryDiaryView> {
               HexColor(records[i].primaryEmotion.color),
               .2,
             ),
-            textColor: records[i].primaryEmotion.colorBrightness == 'dark'
-                ? Colors.white
-                : Colors.black,
+            textColor:
+                records[i].primaryEmotion.colorBrightness == EmotionTheme.DARK
+                    ? Colors.white
+                    : Colors.black,
           );
         }),
       ),

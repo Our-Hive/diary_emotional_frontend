@@ -1,3 +1,4 @@
+import 'package:emotional_app/shared/ui/widgets/info_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +10,7 @@ class EmotionCard extends ConsumerWidget {
   final Color bgColor;
   final Color textColor;
   final void Function() onTap;
+
   const EmotionCard({
     super.key,
     this.primaryEmotion,
@@ -23,7 +25,6 @@ class EmotionCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final ColorScheme appColors = Theme.of(context).colorScheme;
     final String titleText = primaryEmotion != null
         ? '$primaryEmotion, $secondaryEmotion'
         : secondaryEmotion;
@@ -99,29 +100,10 @@ class EmotionCard extends ConsumerWidget {
                 ),
               ),
               description != null
-                  ? IconButton(
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(secondaryEmotion),
-                            content: Text(description!),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                style: TextButton.styleFrom(
-                                  foregroundColor: appColors.error,
-                                ),
-                                child: const Text('Cerrar'),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      icon: const Icon(
-                        Icons.info_outline,
-                        size: 35,
-                      ),
+                  ? InfoButton(
+                      title: secondaryEmotion,
+                      body: description!,
+                      titleColor: primaryColor,
                     )
                   : const SizedBox(),
             ],

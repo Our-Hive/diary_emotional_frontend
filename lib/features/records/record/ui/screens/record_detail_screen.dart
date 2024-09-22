@@ -47,21 +47,29 @@ class RecordDetailScreenState extends ConsumerState<RecordDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalle del registro'),
+        title: Text(
+          widget.recordType == RecordTypes.daily
+              ? "Registro Diario"
+              : "Registro Trascendental",
+        ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Record ID: ${widget.recordId}',
-              style: const TextStyle(fontSize: 30),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (dailyRecord is DailyRecord)
+                  RecordDailyDetail(record: dailyRecord!)
+                else if (trascendentalRecord is TrascendentalRecord)
+                  RecordTrascendentalDetail(record: trascendentalRecord!),
+              ],
             ),
-            if (dailyRecord is DailyRecord)
-              RecordDailyDetail(record: dailyRecord!)
-            else if (trascendentalRecord is TrascendentalRecord)
-              RecordTrascendentalDetail(record: trascendentalRecord!),
-          ],
+          ),
         ),
       ),
     );
