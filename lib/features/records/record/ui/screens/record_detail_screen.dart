@@ -1,9 +1,11 @@
+import 'package:emotional_app/features/home/ui/widgets/emotional_roulette.dart';
 import 'package:emotional_app/features/records/daily_records/domain/entities/daily_record.dart';
 import 'package:emotional_app/features/records/history/ui/providers/history_provider.dart';
 import 'package:emotional_app/features/records/record/ui/widgets/record_daily_detail.dart';
 import 'package:emotional_app/features/records/record/ui/widgets/record_trascendental_detail.dart';
 import 'package:emotional_app/features/records/trascendental_records/domain/entities/trascendental_record.dart';
 import 'package:emotional_app/shared/domain/records/record_types.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_multicolor_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,6 +47,7 @@ class RecordDetailScreenState extends ConsumerState<RecordDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const spacer = SizedBox(height: 40);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -58,15 +61,27 @@ class RecordDetailScreenState extends ConsumerState<RecordDetailScreen> {
           horizontal: 20,
           vertical: 10,
         ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
+        child: SingleChildScrollView(
+          child: LayoutBuilder(
+            builder: (context, constraints) => Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (dailyRecord is DailyRecord)
-                  RecordDailyDetail(record: dailyRecord!)
-                else if (trascendentalRecord is TrascendentalRecord)
-                  RecordTrascendentalDetail(record: trascendentalRecord!),
+                spacer,
+                OurHiveColorIcon(
+                  color: dailyRecord != null
+                      ? HexColor(
+                          dailyRecord!.primaryEmotion.color,
+                        )
+                      : HexColor(
+                          trascendentalRecord!.primaryEmotion.color,
+                        ),
+                ),
+                spacer,
+                Center(
+                  child: dailyRecord is DailyRecord
+                      ? RecordDailyDetail(record: dailyRecord!)
+                      : RecordTrascendentalDetail(record: trascendentalRecord!),
+                )
               ],
             ),
           ),
