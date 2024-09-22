@@ -56,6 +56,16 @@ final goRouterProvider = Provider(
               path: '/history',
               name: AppRoutesName.historyView,
               builder: (context, state) => const HistoryLayout(),
+              routes: [
+                GoRoute(
+                  path: 'recordDetail/:recordType/:recordId',
+                  name: AppRoutesName.recordDetail,
+                  builder: (context, state) => RecordDetailScreen(
+                    recordId: state.pathParameters["recordId"]!,
+                    recordType: state.pathParameters["recordType"]!,
+                  ),
+                ),
+              ],
             ),
             GoRoute(
               path: '/home',
@@ -121,14 +131,6 @@ final goRouterProvider = Provider(
               path: '/mySpace',
               name: AppRoutesName.mySpaceView,
               builder: (context, state) => const MySpaceView(),
-            ),
-            GoRoute(
-              path: '/recordDetail/:recordType/:recordId',
-              name: AppRoutesName.recordDetail,
-              builder: (context, state) => RecordDetailScreen(
-                recordId: state.pathParameters["recordId"]!,
-                recordType: state.pathParameters["recordType"]!,
-              ),
             ),
           ],
         )
