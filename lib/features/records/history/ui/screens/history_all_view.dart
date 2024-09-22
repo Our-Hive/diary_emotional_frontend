@@ -35,8 +35,8 @@ class HistoryAllViewState extends ConsumerState<HistoryAllView> {
 
   @override
   void dispose() {
-    scrollController.dispose();
     super.dispose();
+    scrollController.dispose();
   }
 
   @override
