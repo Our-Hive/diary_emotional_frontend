@@ -1,19 +1,20 @@
+import 'package:emotional_app/features/records/daily_records/domain/entities/daily_record.dart';
 import 'package:flutter/material.dart';
 
-class RecordDailyDetail extends StatefulWidget {
-  const RecordDailyDetail({super.key});
+class RecordDailyDetail extends StatelessWidget {
+  final DailyRecord record;
 
-  @override
-  State<RecordDailyDetail> createState() => _RecordDailyDetailState();
-}
+  const RecordDailyDetail({
+    super.key,
+    required this.record,
+  });
 
-class _RecordDailyDetailState extends State<RecordDailyDetail> {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
       onPressed: () => print(""),
-      child: const Text(
-        'Record Daily Detail',
+      child: Text(
+        record.description.toString(),
       ),
     );
   }

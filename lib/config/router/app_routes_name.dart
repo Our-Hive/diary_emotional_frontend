@@ -11,5 +11,7 @@ abstract class AppRoutesName {
   static const historyView = 'history_view';
   static const recordDetail = 'record_detail';
   static const infoView = 'info_view';
+  static const contactLinesScreen = 'contact_lines_screen';
+  static const recommendedContentScreen = 'recommended_content_screen';
   static const mySpaceView = 'mySpace_view';
 }

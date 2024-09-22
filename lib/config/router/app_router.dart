@@ -4,6 +4,8 @@ import 'package:emotional_app/features/account/auth/ui/screens/login_screen.dart
 import 'package:emotional_app/features/account/auth/ui/screens/sign_up_multi_step/step_account_screen.dart';
 import 'package:emotional_app/features/account/auth/ui/screens/sign_up_multi_step/step_contact_screen.dart';
 import 'package:emotional_app/features/account/user/ui/screens/profile_view.dart';
+import 'package:emotional_app/features/info/ui/screens/contact_lines_screen.dart';
+import 'package:emotional_app/features/info/ui/screens/recommended_content_screen.dart';
 import 'package:emotional_app/features/records/history/ui/layout/history_layout.dart';
 import 'package:emotional_app/features/home/ui/layouts/home_layout.dart';
 import 'package:emotional_app/features/records/daily_records/ui/screens/daily_form_screen.dart';
@@ -102,6 +104,18 @@ final goRouterProvider = Provider(
               path: '/info',
               name: AppRoutesName.infoView,
               builder: (context, state) => const InfoView(),
+              routes: [
+                GoRoute(
+                  path: 'contactLines',
+                  name: AppRoutesName.contactLinesScreen,
+                  builder: (context, state) => const ContactLinesScreen(),
+                ),
+                GoRoute(
+                  path: 'recommendedContent',
+                  name: AppRoutesName.recommendedContentScreen,
+                  builder: (context, state) => const RecommendedContentScreen(),
+                ),
+              ],
             ),
             GoRoute(
               path: '/mySpace',

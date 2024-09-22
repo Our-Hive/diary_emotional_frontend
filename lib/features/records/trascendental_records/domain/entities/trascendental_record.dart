@@ -1,3 +1,4 @@
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/records/record/domain/entities/record.dart';
 
 class TrascendentalRecord extends Record {
@@ -14,4 +15,14 @@ class TrascendentalRecord extends Record {
     required this.activity,
     required this.companions,
   });
+
+  factory TrascendentalRecord.empty() => TrascendentalRecord(
+        id: '',
+        primaryEmotion: Emotion.empty(),
+        secondaryEmotion: Emotion.empty(),
+        date: DateTime.now(),
+        location: '',
+        activity: '',
+        companions: '',
+      );
 }
