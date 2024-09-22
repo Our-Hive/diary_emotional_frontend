@@ -61,6 +61,34 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
     }
   }
 
+  TrascendentalRecord findTrascendentalRecord(String recordId) {
+    try {
+      final record = state.records
+          .where((element) => element.id == recordId)
+          .first as TrascendentalRecord;
+      return record;
+    } catch (e) {
+      state = state.copyWith(
+        errorMessages: e.toString(),
+      );
+      return TrascendentalRecord.empty();
+    }
+  }
+
+  DailyRecord findDailyRecord(String recordId) {
+    try {
+      final record = state.records
+          .where((element) => element.id == recordId)
+          .first as DailyRecord;
+      return record;
+    } catch (e) {
+      state = state.copyWith(
+        errorMessages: e.toString(),
+      );
+      return DailyRecord.empty();
+    }
+  }
+
   Future<void> loadNextPage() async {
     if (maxPage) return;
     if (state.isLoading) return;

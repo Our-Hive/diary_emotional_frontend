@@ -1,3 +1,4 @@
+import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/records/record/domain/entities/record.dart';
 
 class DailyRecord extends Record {
@@ -10,4 +11,12 @@ class DailyRecord extends Record {
     required super.date,
     required this.description,
   });
+
+  factory DailyRecord.empty() => DailyRecord(
+        id: '',
+        primaryEmotion: Emotion.empty(),
+        secondaryEmotion: Emotion.empty(),
+        date: DateTime.now(),
+        description: '',
+      );
 }

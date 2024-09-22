@@ -1,20 +1,19 @@
+import 'package:emotional_app/features/records/trascendental_records/domain/entities/trascendental_record.dart';
 import 'package:flutter/material.dart';
 
-class RecordTrascendentalDetail extends StatefulWidget {
-  const RecordTrascendentalDetail({super.key});
+class RecordTrascendentalDetail extends StatelessWidget {
+  final TrascendentalRecord record;
+  const RecordTrascendentalDetail({
+    super.key,
+    required this.record,
+  });
 
-  @override
-  State<RecordTrascendentalDetail> createState() =>
-      _RecordTrascendentalDetailState();
-}
-
-class _RecordTrascendentalDetailState extends State<RecordTrascendentalDetail> {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
       onPressed: () => print(""),
-      child: const Text(
-        'Record Trascendental Detail',
+      child: Text(
+        record.date.toString(),
       ),
     );
   }
