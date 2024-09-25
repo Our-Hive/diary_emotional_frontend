@@ -33,6 +33,7 @@ class ProfileViewState extends ConsumerState<ProfileView> {
   Widget build(BuildContext context) {
     final User user = ref.watch(userProvider).currentUser;
     final appColors = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     ref.listen(userProvider, (previous, next) {
       if (next.status == UserStatus.disabled) {
@@ -64,46 +65,56 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 5),
-                  OurHiveColorIcon(
-                    color: RandomColor.generate(),
+                  Stack(
+                    children: [
+                      OurHiveColorIcon(
+                        color: RandomColor.generate(),
+                      ),
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.edit,
+                            size: 30,
+                          ),
+                          onPressed: () => print('Pressed'),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 15),
                   Text(
                     'Hola\r${user.firstName}\r${user.lastName}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: textTheme.titleLarge,
                   ),
                   Text(
                     user.email,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    style: TextStyle(
+                      fontWeight: textTheme.titleMedium!.fontWeight,
+                      fontSize: textTheme.titleMedium!.fontSize,
                       color: Colors.white60,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  _ActiveTextFormField(
-                    appColors: appColors,
-                    primaryText: 'Username',
-                    secondaryText: user.userName,
+                  const SizedBox(height: 40),
+                  // todo: organize with a grid
+                  Text(
+                    'Username: ${user.userName}',
+                    style: textTheme.titleMedium,
                   ),
                   const SizedBox(height: 15),
-                  _ActiveTextFormField(
-                    appColors: appColors,
-                    primaryText: 'Numero',
-                    secondaryText: '+57 ${user.phoneNumber}',
+                  Text(
+                    'Teléfono: ${user.phoneNumber}',
+                    style: textTheme.titleMedium,
                   ),
                   const SizedBox(height: 15),
-                  _ActiveTextFormField(
-                    appColors: appColors,
-                    primaryText: 'Fecha de Nacimiento',
-                    secondaryText: DateTimeFormatter.getFormattedDate(
+                  Text(
+                    'Fecha de nacimiento: ${DateTimeFormatter.getFormattedDate(
                       user.birthDate,
-                    ),
+                    )}',
+                    style: textTheme.titleMedium,
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 40),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: appColors.onSecondary),

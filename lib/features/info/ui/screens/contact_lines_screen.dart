@@ -1,3 +1,4 @@
+import 'package:emotional_app/features/info/domain/entities/contact_line.dart';
 import 'package:emotional_app/features/info/ui/providers/contact_line_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,11 +39,8 @@ class _ContactLinesScreenState extends ConsumerState<ContactLinesScreen> {
             ? ListView.separated(
                 separatorBuilder: (context, index) => const Divider(),
                 itemBuilder: (context, index) {
-                  final content = state.contactLines[index];
-                  return ListTile(
-                    title: Text(content.title),
-                    subtitle: Text(content.description),
-                  );
+                  final line = state.contactLines[index];
+                  return ContactLinesDetailCard(line: line);
                 },
                 itemCount: state.contactLines.length,
               )
@@ -54,6 +52,61 @@ class _ContactLinesScreenState extends ConsumerState<ContactLinesScreen> {
                     child: CircularProgressIndicator(),
                   ),
       ),
+    );
+  }
+}
+
+class ContactLinesDetailCard extends StatelessWidget {
+  const ContactLinesDetailCard({
+    super.key,
+    required this.line,
+  });
+
+  final ContactLine line;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox(
+          child: Card(
+            // todo: configure color card
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 20,
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.phone,
+                    size: 60,
+                  ),
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: constraints.maxWidth * 0.6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          line.title,
+                          style: textTheme.titleLarge!,
+                        ),
+                        Text(
+                          line.description,
+                          style: textTheme.bodyLarge!,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
