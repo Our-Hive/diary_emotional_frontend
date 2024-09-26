@@ -45,35 +45,40 @@ class HistoryAllViewState extends ConsumerState<HistoryAllView> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: ListView.separated(
-          itemCount: records.length,
-          controller: scrollController,
-          separatorBuilder: (_, __) => const SizedBox(height: 10),
-          itemBuilder: (_, i) {
-            final record = records[i];
-            return EmotionCard(
-              primaryEmotion: record.primaryEmotion.name,
-              secondaryEmotion: record.secondaryEmotion.name,
-              primaryColor: HexColor(record.secondaryEmotion.color),
-              onTap: () => context.pushNamed(
-                AppRoutesName.recordDetail,
-                pathParameters: {
-                  'recordId': record.id,
-                  'recordType': record is DailyRecord
-                      ? RecordTypes.daily
-                      : RecordTypes.transcendental,
-                },
+        child: RefreshIndicator(
+          onRefresh: () => ref.read(historyProvider.notifier).getHistory(
+                refresh: true,
               ),
-              bgColor: ColorUtils.darken(
-                HexColor(record.secondaryEmotion.color),
-                .2,
-              ),
-              textColor:
-                  record.secondaryEmotion.colorBrightness == EmotionTheme.DARK
-                      ? Colors.white
-                      : Colors.black,
-            );
-          },
+          child: ListView.separated(
+            itemCount: records.length,
+            controller: scrollController,
+            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            itemBuilder: (_, i) {
+              final record = records[i];
+              return EmotionCard(
+                primaryEmotion: record.primaryEmotion.name,
+                secondaryEmotion: record.secondaryEmotion.name,
+                primaryColor: HexColor(record.secondaryEmotion.color),
+                onTap: () => context.pushNamed(
+                  AppRoutesName.recordDetail,
+                  pathParameters: {
+                    'recordId': record.id,
+                    'recordType': record is DailyRecord
+                        ? RecordTypes.daily
+                        : RecordTypes.transcendental,
+                  },
+                ),
+                bgColor: ColorUtils.darken(
+                  HexColor(record.secondaryEmotion.color),
+                  .2,
+                ),
+                textColor:
+                    record.secondaryEmotion.colorBrightness == EmotionTheme.DARK
+                        ? Colors.white
+                        : Colors.black,
+              );
+            },
+          ),
         ),
       ),
     );

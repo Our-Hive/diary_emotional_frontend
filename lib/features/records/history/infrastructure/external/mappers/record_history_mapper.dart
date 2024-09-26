@@ -49,4 +49,56 @@ class RecordHistoryMapper {
       );
     }).toList();
   }
+
+  static List<DailyRecord> fromGetDailyRecordHistoryResponseDto(
+    List<GetRecordHistoryResponseDto> dto,
+  ) {
+    return dto.map(
+      (e) {
+        return DailyRecord(
+          id: e.id.toString(),
+          primaryEmotion: Emotion(
+            name: e.primaryEmotion.name,
+            color: e.primaryEmotion.color,
+            description: e.primaryEmotion.description,
+            colorBrightness: e.primaryEmotion.theme,
+          ),
+          secondaryEmotion: Emotion(
+            name: e.secondaryEmotion.name,
+            color: e.secondaryEmotion.color,
+            description: e.secondaryEmotion.description,
+            colorBrightness: e.primaryEmotion.theme,
+          ),
+          description: e.description ?? '',
+          date: e.createdAt,
+        );
+      },
+    ).toList();
+  }
+
+  static List<TrascendentalRecord> fromGetTrascendentalRecordHistoryResponseDto(
+    List<GetRecordHistoryResponseDto> dto,
+  ) {
+    return dto.map((e) {
+      return TrascendentalRecord(
+        id: e.id.toString(),
+        primaryEmotion: Emotion(
+          name: e.primaryEmotion.name,
+          color: e.primaryEmotion.color,
+          description: e.primaryEmotion.description,
+          colorBrightness: e.primaryEmotion.theme,
+        ),
+        secondaryEmotion: Emotion(
+          name: e.secondaryEmotion.name,
+          color: e.secondaryEmotion.color,
+          description: e.secondaryEmotion.description,
+          colorBrightness: e.primaryEmotion.theme,
+        ),
+        location: e.location ?? '',
+        activity: e.activity ?? '',
+        companions: e.companion ?? '',
+        date: e.createdAt,
+      );
+    }).toList();
+  }
 }

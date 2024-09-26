@@ -17,8 +17,13 @@ final historyProvider = StateNotifierProvider<HistoryNotifier, HistoryState>(
 class HistoryNotifier extends StateNotifier<HistoryState> {
   final HistoryExternalRepository _historyRepository;
   int currentPage = 0;
-  // todo: remove this verifying if it's the last page.
   bool maxPage = false;
+
+  int currentPageT = 0;
+  bool maxPageT = false;
+
+  int currentPageD = 0;
+  bool maxPageD = false;
 
   HistoryNotifier({
     required HistoryExternalRepository historyRepository,
@@ -27,9 +32,9 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
           HistoryState.initial(),
         );
 
-  Future<void> getHistory() async {
+  Future<void> getHistory({refresh = false}) async {
     try {
-      if (currentPage == 0) {
+      if (currentPage == 0 || refresh) {
         final records = await _historyRepository.getHistory();
         state = state.copyWith(
           records: records,
@@ -45,16 +50,36 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
     }
   }
 
-  Future<void> getDailyRecords() async {
-    try {} catch (e) {
+  Future<void> getDailyRecords({refresh = false}) async {
+    try {
+      if (currentPage == 0 || refresh) {
+        final records = await _historyRepository.getDailyRecords();
+        state = state.copyWith(
+          dailyRecords: records,
+          errorMessages: '',
+        );
+      } else {
+        loadNextPageDaily();
+      }
+    } catch (e) {
       state = state.copyWith(
         errorMessages: e.toString(),
       );
     }
   }
 
-  Future<void> getTrascendentalRecords() async {
-    try {} catch (e) {
+  Future<void> getTrascendentalRecords({refresh = false}) async {
+    try {
+      if (currentPage == 0 || refresh) {
+        final records = await _historyRepository.getTrascendentalRecords();
+        state = state.copyWith(
+          trascendentalRecords: records,
+          errorMessages: '',
+        );
+      } else {
+        loadNextPageTrascendental();
+      }
+    } catch (e) {
       state = state.copyWith(
         errorMessages: e.toString(),
       );
@@ -63,9 +88,16 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
 
   TrascendentalRecord findTrascendentalRecord(String recordId) {
     try {
+      final trascendentalRecord = state.trascendentalRecords
+          .where((element) => element.id == recordId)
+          .first;
+
+      return trascendentalRecord;
+    } on StateError catch (_) {
       final record = state.records
           .where((element) => element.id == recordId)
           .first as TrascendentalRecord;
+
       return record;
     } catch (e) {
       state = state.copyWith(
@@ -77,9 +109,17 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
 
   DailyRecord findDailyRecord(String recordId) {
     try {
+      final dailyRecord = state.dailyRecords
+          .where(
+            (element) => element.id == recordId,
+          )
+          .first;
+      return dailyRecord;
+    } on StateError catch (_) {
       final record = state.records
           .where((element) => element.id == recordId)
           .first as DailyRecord;
+
       return record;
     } catch (e) {
       state = state.copyWith(
@@ -102,6 +142,52 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
     }
     state = state.copyWith(
       records: [...state.records, ...records],
+      errorMessages: '',
+    );
+    await Future.delayed(const Duration(milliseconds: 300));
+    state = state.copyWith(
+      isLoading: false,
+    );
+  }
+
+  Future<void> loadNextPageTrascendental() async {
+    if (maxPageT) return;
+    if (state.isLoading) return;
+    state = state.copyWith(
+      isLoading: true,
+    );
+    currentPageT++;
+    final records = await _historyRepository.getTrascendentalRecords(
+      page: currentPageT,
+    );
+    if (records.isEmpty) {
+      maxPageT = true;
+    }
+    state = state.copyWith(
+      trascendentalRecords: [...state.trascendentalRecords, ...records],
+      errorMessages: '',
+    );
+    await Future.delayed(const Duration(milliseconds: 300));
+    state = state.copyWith(
+      isLoading: false,
+    );
+  }
+
+  Future<void> loadNextPageDaily() async {
+    if (maxPageD) return;
+    if (state.isLoading) return;
+    state = state.copyWith(
+      isLoading: true,
+    );
+    currentPageD++;
+    final records = await _historyRepository.getDailyRecords(
+      page: currentPageD,
+    );
+    if (records.isEmpty) {
+      maxPageD = true;
+    }
+    state = state.copyWith(
+      dailyRecords: [...state.dailyRecords, ...records],
       errorMessages: '',
     );
     await Future.delayed(const Duration(milliseconds: 300));
