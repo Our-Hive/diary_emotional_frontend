@@ -75,7 +75,7 @@ class RecommendedContentCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           // todo: configure color card
-          color: const Color(0xffC3ADDE),
+          color: const Color(0xffDEADCC),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.white,

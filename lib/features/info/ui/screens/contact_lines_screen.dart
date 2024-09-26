@@ -37,7 +37,9 @@ class _ContactLinesScreenState extends ConsumerState<ContactLinesScreen> {
         ),
         child: state.contactLines.isNotEmpty
             ? ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 20,
+                ),
                 itemBuilder: (context, index) {
                   final line = state.contactLines[index];
                   return ContactLinesDetailCard(line: line);
@@ -70,39 +72,40 @@ class ContactLinesDetailCard extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return SizedBox(
-          child: Card(
-            // todo: configure color card
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 20,
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.phone,
-                    size: 60,
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.deepPurple,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 15,
+              horizontal: 20,
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.phone,
+                  size: 60,
+                ),
+                const SizedBox(width: 20),
+                SizedBox(
+                  width: constraints.maxWidth * 0.6,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        line.title,
+                        style: textTheme.titleLarge!,
+                      ),
+                      Text(
+                        line.description,
+                        style: textTheme.bodyLarge!,
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    width: constraints.maxWidth * 0.6,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          line.title,
-                          style: textTheme.titleLarge!,
-                        ),
-                        Text(
-                          line.description,
-                          style: textTheme.bodyLarge!,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
