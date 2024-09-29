@@ -45,7 +45,7 @@ final goRouterProvider = Provider(
           ],
         ),
         ShellRoute(
-          builder: (context, state, child) => HoneLayout(childView: child),
+          builder: (context, state, child) => HomeLayout(childView: child),
           routes: [
             GoRoute(
               path: '/profile',

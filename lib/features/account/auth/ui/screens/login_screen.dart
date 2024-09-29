@@ -52,6 +52,7 @@ class LoginScreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         Future.delayed(
           const Duration(milliseconds: 500),
+          // ignore: use_build_context_synchronously
           () => context.goNamed(AppRoutesName.homeView),
         );
       }
@@ -59,9 +60,7 @@ class LoginScreen extends ConsumerWidget {
 
     return Scaffold(
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+        onTap: () => FocusScope.of(context).unfocus(),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(20),

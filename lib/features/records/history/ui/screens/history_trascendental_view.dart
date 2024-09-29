@@ -1,11 +1,14 @@
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/home/domain/entities/emotion.dart';
 import 'package:emotional_app/features/home/ui/widgets/emotional_roulette.dart';
 import 'package:emotional_app/features/records/history/ui/providers/history_provider.dart';
+import 'package:emotional_app/features/records/trascendental_records/domain/entities/trascendental_record.dart';
+import 'package:emotional_app/shared/domain/records/record_types.dart';
 import 'package:emotional_app/shared/ui/color/color_utils.dart';
 import 'package:emotional_app/shared/ui/widgets/emotion_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:emotional_app/features/records/record/domain/entities/record.dart';
+import 'package:go_router/go_router.dart';
 
 class HistoryTrascendentalView extends ConsumerStatefulWidget {
   const HistoryTrascendentalView({super.key});
@@ -15,10 +18,18 @@ class HistoryTrascendentalView extends ConsumerStatefulWidget {
 }
 
 class HistoryAllViewState extends ConsumerState<HistoryTrascendentalView> {
+  final scrollController = ScrollController();
+
   @override
   void initState() {
-    ref.read(historyProvider.notifier).getHistory();
     super.initState();
+    ref.read(historyProvider.notifier).getTrascendentalRecords();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent * 0.9) {
+        ref.read(historyProvider.notifier).loadNextPageTrascendental();
+      }
+    });
   }
 
   @override
@@ -28,26 +39,75 @@ class HistoryAllViewState extends ConsumerState<HistoryTrascendentalView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Record> records = ref.watch(historyProvider).dailyRecords;
+    final state = ref.watch(historyProvider);
+    final List<TrascendentalRecord> records = state.trascendentalRecords;
+    return state.errorMessages.isNotEmpty
+        ? Center(
+            child: Text(state.errorMessages),
+          )
+        : records.isEmpty && state.isLoading
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 10),
+                    const Text('Cargando registros...'),
+                  ],
+                ),
+              )
+            : _BuildTrascendentalList(
+                records: records,
+                scrollController: scrollController,
+              );
+  }
+}
+
+class _BuildTrascendentalList extends ConsumerWidget {
+  final List<TrascendentalRecord> records;
+  final ScrollController scrollController;
+
+  const _BuildTrascendentalList({
+    required this.records,
+    required this.scrollController,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: ListView.builder(itemBuilder: (_, i) {
-          return EmotionCard(
-            primaryEmotion: records[i].primaryEmotion.name,
-            secondaryEmotion: records[i].secondaryEmotion.name,
-            primaryColor: HexColor(records[i].primaryEmotion.color),
-            onTap: () => print('Tapped'),
-            bgColor: ColorUtils.darken(
-              HexColor(records[i].primaryEmotion.color),
-              .2,
-            ),
-            textColor:
-                records[i].primaryEmotion.colorBrightness == EmotionTheme.DARK
-                    ? Colors.white
-                    : Colors.black,
-          );
-        }),
+        child: RefreshIndicator(
+          onRefresh: () =>
+              ref.read(historyProvider.notifier).getTrascendentalRecords(),
+          child: ListView.separated(
+            itemCount: records.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            itemBuilder: (_, i) {
+              final record = records[i];
+              return EmotionCard(
+                primaryEmotion: record.primaryEmotion.name,
+                secondaryEmotion: record.secondaryEmotion.name,
+                primaryColor: HexColor(record.secondaryEmotion.color),
+                onTap: () => context.pushNamed(
+                  AppRoutesName.recordDetail,
+                  pathParameters: {
+                    'recordId': record.id,
+                    'recordType': RecordTypes.transcendental,
+                  },
+                ),
+                bgColor: ColorUtils.darken(
+                  HexColor(record.secondaryEmotion.color),
+                  .2,
+                ),
+                textColor:
+                    record.secondaryEmotion.colorBrightness == EmotionTheme.DARK
+                        ? Colors.white
+                        : Colors.black,
+              );
+            },
+          ),
+        ),
       ),
     );
   }

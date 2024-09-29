@@ -25,6 +25,7 @@ class HomeCard extends StatelessWidget {
         onTap: onTap,
         child: Card(
           clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: Theme.of(context).colorScheme.onPrimary,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[

@@ -18,8 +18,8 @@ class RecordTrascendentalDetail extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final textColor =
         record.secondaryEmotion.colorBrightness == EmotionTheme.DARK
-            ? Colors.black
-            : Colors.white;
+            ? Colors.white
+            : Colors.black;
     return Card(
       child: Container(
         decoration: BoxDecoration(

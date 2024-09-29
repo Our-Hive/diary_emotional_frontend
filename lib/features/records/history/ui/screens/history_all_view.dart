@@ -41,39 +41,79 @@ class HistoryAllViewState extends ConsumerState<HistoryAllView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Record> records = ref.watch(historyProvider).records;
+    final state = ref.watch(historyProvider);
+    final List<Record> records = state.records;
+    return state.errorMessages.isNotEmpty
+        ? Center(
+            child: Text(state.errorMessages),
+          )
+        : records.isEmpty && state.isLoading
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 10),
+                    const Text('Cargando registros...'),
+                  ],
+                ),
+              )
+            : _BuildHistoryList(
+                records: records,
+                scrollController: scrollController,
+              );
+  }
+}
+
+class _BuildHistoryList extends ConsumerWidget {
+  final List<Record> records;
+
+  final ScrollController scrollController;
+
+  const _BuildHistoryList({
+    required this.records,
+    required this.scrollController,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: ListView.separated(
-          itemCount: records.length,
-          controller: scrollController,
-          separatorBuilder: (_, __) => const SizedBox(height: 10),
-          itemBuilder: (_, i) {
-            final record = records[i];
-            return EmotionCard(
-              primaryEmotion: record.primaryEmotion.name,
-              secondaryEmotion: record.secondaryEmotion.name,
-              primaryColor: HexColor(record.secondaryEmotion.color),
-              onTap: () => context.pushNamed(
-                AppRoutesName.recordDetail,
-                pathParameters: {
-                  'recordId': record.id,
-                  'recordType': record is DailyRecord
-                      ? RecordTypes.daily
-                      : RecordTypes.transcendental,
-                },
+        child: RefreshIndicator(
+          onRefresh: () => ref.read(historyProvider.notifier).getHistory(
+                refresh: true,
               ),
-              bgColor: ColorUtils.darken(
-                HexColor(record.secondaryEmotion.color),
-                .2,
-              ),
-              textColor:
-                  record.secondaryEmotion.colorBrightness == EmotionTheme.DARK
-                      ? Colors.white
-                      : Colors.black,
-            );
-          },
+          child: ListView.separated(
+            itemCount: records.length,
+            controller: scrollController,
+            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            itemBuilder: (_, i) {
+              final record = records[i];
+              return EmotionCard(
+                primaryEmotion: record.primaryEmotion.name,
+                secondaryEmotion: record.secondaryEmotion.name,
+                primaryColor: HexColor(record.secondaryEmotion.color),
+                onTap: () => context.pushNamed(
+                  AppRoutesName.recordDetail,
+                  pathParameters: {
+                    'recordId': record.id,
+                    'recordType': record is DailyRecord
+                        ? RecordTypes.daily
+                        : RecordTypes.transcendental,
+                  },
+                ),
+                bgColor: ColorUtils.darken(
+                  HexColor(record.secondaryEmotion.color),
+                  .2,
+                ),
+                textColor:
+                    record.secondaryEmotion.colorBrightness == EmotionTheme.DARK
+                        ? Colors.white
+                        : Colors.black,
+              );
+            },
+          ),
         ),
       ),
     );

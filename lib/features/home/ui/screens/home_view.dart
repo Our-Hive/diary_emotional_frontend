@@ -1,6 +1,7 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/home/ui/widgets/home_card.dart';
 import 'package:emotional_app/shared/domain/records/record_types.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,9 +13,7 @@ class HomeView extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final sizeByCard = size.height / 3;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Inicio'),
-      ),
+      appBar: OurHiveAppBar(title: 'Inicio'),
       body: Center(
         child: SingleChildScrollView(
           child: Column(

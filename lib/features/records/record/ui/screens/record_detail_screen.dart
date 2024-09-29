@@ -31,12 +31,14 @@ class RecordDetailScreenState extends ConsumerState<RecordDetailScreen> {
   void initState() {
     super.initState();
     if (widget.recordType == RecordTypes.daily) {
-      dailyRecord =
-          ref.read(historyProvider.notifier).findDailyRecord(widget.recordId);
+      dailyRecord = ref.read(historyProvider.notifier).findDailyRecord(
+            widget.recordId,
+          );
     } else {
-      trascendentalRecord = ref
-          .read(historyProvider.notifier)
-          .findTrascendentalRecord(widget.recordId);
+      trascendentalRecord =
+          ref.read(historyProvider.notifier).findTrascendentalRecord(
+                widget.recordId,
+              );
     }
   }
 
@@ -79,8 +81,12 @@ class RecordDetailScreenState extends ConsumerState<RecordDetailScreen> {
                 spacer,
                 Center(
                   child: dailyRecord is DailyRecord
-                      ? RecordDailyDetail(record: dailyRecord!)
-                      : RecordTrascendentalDetail(record: trascendentalRecord!),
+                      ? RecordDailyDetail(
+                          record: dailyRecord!,
+                        )
+                      : RecordTrascendentalDetail(
+                          record: trascendentalRecord!,
+                        ),
                 )
               ],
             ),

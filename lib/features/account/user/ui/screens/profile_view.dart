@@ -5,6 +5,7 @@ import 'package:emotional_app/features/account/user/domain/entities/user.dart';
 import 'package:emotional_app/features/account/user/ui/provider/disable_form_provider.dart';
 import 'package:emotional_app/features/account/user/ui/provider/user_provider.dart';
 import 'package:emotional_app/shared/domain/utils/date_time_formatter.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:emotional_app/shared/ui/widgets/our_hive_multicolor_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,6 +34,7 @@ class ProfileViewState extends ConsumerState<ProfileView> {
   Widget build(BuildContext context) {
     final User user = ref.watch(userProvider).currentUser;
     final appColors = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     ref.listen(userProvider, (previous, next) {
       if (next.status == UserStatus.disabled) {
@@ -51,8 +53,8 @@ class ProfileViewState extends ConsumerState<ProfileView> {
       }
     });
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Perfil'),
+      appBar: OurHiveAppBar(
+        title: 'Perfil',
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -64,47 +66,44 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 5),
-                  OurHiveColorIcon(
-                    color: RandomColor.generate(),
+                  Stack(
+                    children: [
+                      OurHiveColorIcon(
+                        color: RandomColor.generate(),
+                      ),
+                      /*
+                       todo:
+                       Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.edit,
+                            size: 30,
+                          ),
+                          onPressed: () => print('Pressed'),
+                        ),
+                      ), */
+                    ],
                   ),
                   const SizedBox(height: 15),
                   Text(
                     'Hola\r${user.firstName}\r${user.lastName}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: textTheme.titleLarge,
                   ),
                   Text(
                     user.email,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    style: TextStyle(
+                      fontWeight: textTheme.titleMedium!.fontWeight,
+                      fontSize: textTheme.titleMedium!.fontSize,
                       color: Colors.white60,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  _ActiveTextFormField(
-                    appColors: appColors,
-                    primaryText: 'Username',
-                    secondaryText: user.userName,
+                  const SizedBox(height: 40),
+                  UserDataGrid(
+                    user: user,
                   ),
-                  const SizedBox(height: 15),
-                  _ActiveTextFormField(
-                    appColors: appColors,
-                    primaryText: 'Numero',
-                    secondaryText: '+57 ${user.phoneNumber}',
-                  ),
-                  const SizedBox(height: 15),
-                  _ActiveTextFormField(
-                    appColors: appColors,
-                    primaryText: 'Fecha de Nacimiento',
-                    secondaryText: DateTimeFormatter.getFormattedDate(
-                      user.birthDate,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
+                  /*   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: appColors.onSecondary),
                       borderRadius: BorderRadius.circular(10),
@@ -118,8 +117,8 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                       icon: const Icon(Icons.edit),
                       label: const Text('Editar perfil'),
                     ),
-                  ),
-                  const SizedBox(height: 15),
+                  ), */
+                  const SizedBox(height: 40),
                   FilledButton.icon(
                     onPressed: () => showDialog(
                       context: context,
@@ -140,6 +139,83 @@ class ProfileViewState extends ConsumerState<ProfileView> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class UserDataGrid extends StatelessWidget {
+  const UserDataGrid({
+    super.key,
+    required this.user,
+  });
+
+  final User user;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 2,
+      ),
+      shrinkWrap: true,
+      children: [
+        TextGrid(
+          text: "Username:",
+          crossAxisAlignmentText: CrossAxisAlignment.start,
+        ),
+        TextGrid(
+          text: user.userName,
+          crossAxisAlignmentText: CrossAxisAlignment.end,
+        ),
+        TextGrid(
+          text: 'Teléfono:',
+          crossAxisAlignmentText: CrossAxisAlignment.start,
+        ),
+        TextGrid(
+          text: user.phoneNumber,
+          crossAxisAlignmentText: CrossAxisAlignment.end,
+        ),
+        TextGrid(
+          text: 'Fecha de nacimiento:',
+          crossAxisAlignmentText: CrossAxisAlignment.end,
+        ),
+        TextGrid(
+          text: DateTimeFormatter.getFormattedDate(
+            user.birthDate,
+          ),
+          crossAxisAlignmentText: CrossAxisAlignment.end,
+        ),
+      ],
+    );
+  }
+}
+
+class TextGrid extends StatelessWidget {
+  final String text;
+  final CrossAxisAlignment crossAxisAlignmentText;
+
+  const TextGrid({
+    super.key,
+    required this.text,
+    required this.crossAxisAlignmentText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: crossAxisAlignmentText,
+      children: [
+        Text(
+          text,
+          style: textTheme.titleMedium,
+        ),
+      ],
     );
   }
 }
