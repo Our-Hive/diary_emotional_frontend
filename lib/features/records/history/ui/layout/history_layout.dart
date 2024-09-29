@@ -12,7 +12,8 @@ class HistoryLayout extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Historial'),
+          title: Text('Historial'),
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(

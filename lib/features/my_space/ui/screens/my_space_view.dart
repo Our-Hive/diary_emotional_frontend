@@ -1,4 +1,5 @@
 import 'package:emotional_app/features/my_space/ui/providers/my_space_provider.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,9 +28,7 @@ class _MySpaceViewState extends ConsumerState<MySpaceView> {
   Widget build(BuildContext context) {
     final state = ref.watch(mySpaceProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mi Espacio'),
-      ),
+      appBar: OurHiveAppBar(title: 'Mi Espacio'),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
