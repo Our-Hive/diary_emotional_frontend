@@ -41,7 +41,42 @@ class HistoryAllViewState extends ConsumerState<HistoryAllView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Record> records = ref.watch(historyProvider).records;
+    final state = ref.watch(historyProvider);
+    final List<Record> records = state.records;
+    return state.errorMessages.isNotEmpty
+        ? Center(
+            child: Text(state.errorMessages),
+          )
+        : records.isEmpty && state.isLoading
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 10),
+                    const Text('Cargando registros...'),
+                  ],
+                ),
+              )
+            : _BuildHistoryList(
+                records: records,
+                scrollController: scrollController,
+              );
+  }
+}
+
+class _BuildHistoryList extends ConsumerWidget {
+  final List<Record> records;
+
+  final ScrollController scrollController;
+
+  const _BuildHistoryList({
+    required this.records,
+    required this.scrollController,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),

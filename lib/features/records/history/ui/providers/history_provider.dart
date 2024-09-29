@@ -1,6 +1,7 @@
 import 'package:emotional_app/features/records/daily_records/domain/entities/daily_record.dart';
 import 'package:emotional_app/features/records/history/domain/external/repository/history_external_repository.dart';
 import 'package:emotional_app/features/records/history/infrastructure/external/data_source/history_api_data_source_impl.dart';
+import 'package:emotional_app/features/records/history/infrastructure/external/exceptions/history_empty_exception.dart';
 import 'package:emotional_app/features/records/history/infrastructure/external/repository/history_external_repository_impl.dart';
 import 'package:emotional_app/features/records/trascendental_records/domain/entities/trascendental_record.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,6 +44,12 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
       } else {
         loadNextPage();
       }
+    } on HistoryEmptyException {
+      if (state.records.isEmpty) {
+        state = state.copyWith(
+          errorMessages: 'No hay registros, ¡anímate a crear uno!',
+        );
+      }
     } catch (e) {
       state = state.copyWith(
         errorMessages: e.toString(),
@@ -61,6 +68,13 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
       } else {
         loadNextPageDaily();
       }
+    } on HistoryEmptyException {
+      if (state.dailyRecords.isEmpty) {
+        state = state.copyWith(
+          errorMessages:
+              'No hay registros diarios, ¡anímate a crear el primero!',
+        );
+      }
     } catch (e) {
       state = state.copyWith(
         errorMessages: e.toString(),
@@ -78,6 +92,13 @@ class HistoryNotifier extends StateNotifier<HistoryState> {
         );
       } else {
         loadNextPageTrascendental();
+      }
+    } on HistoryEmptyException {
+      if (state.trascendentalRecords.isEmpty) {
+        state = state.copyWith(
+          errorMessages:
+              'No hay registros trascendentales, ¡anímate a crear uno!',
+        );
       }
     } catch (e) {
       state = state.copyWith(

@@ -1,3 +1,4 @@
+import 'package:emotional_app/features/my_space/domain/entities/my_space.dart';
 import 'package:emotional_app/features/my_space/ui/providers/my_space_provider.dart';
 import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -35,20 +36,31 @@ class _MySpaceViewState extends ConsumerState<MySpaceView> {
           children: <Widget>[
             if (state.isLoading) const CircularProgressIndicator(),
             if (state.error.isNotEmpty) Text(state.error),
-            if (state.spaces.isNotEmpty)
-              ListView.builder(
-                itemCount: state.spaces.length,
-                itemBuilder: (context, index) {
-                  final space = state.spaces[index];
-                  return ListTile(
-                    title: Text(space.name),
-                    subtitle: Text(space.url),
-                  );
-                },
-              ),
+            if (state.spaces.isNotEmpty) _MySpaceList(spaceList: state.spaces),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _MySpaceList extends StatelessWidget {
+  final List<MySpace> spaceList;
+  const _MySpaceList({
+    required this.spaceList,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: spaceList.length,
+      itemBuilder: (context, index) {
+        final space = spaceList[index];
+        return ListTile(
+          title: Text(space.name),
+          subtitle: Text(space.url),
+        );
+      },
     );
   }
 }

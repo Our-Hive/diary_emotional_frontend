@@ -39,8 +39,41 @@ class HistoryAllViewState extends ConsumerState<HistoryTrascendentalView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<TrascendentalRecord> records =
-        ref.watch(historyProvider).trascendentalRecords;
+    final state = ref.watch(historyProvider);
+    final List<TrascendentalRecord> records = state.trascendentalRecords;
+    return state.errorMessages.isNotEmpty
+        ? Center(
+            child: Text(state.errorMessages),
+          )
+        : records.isEmpty && state.isLoading
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 10),
+                    const Text('Cargando registros...'),
+                  ],
+                ),
+              )
+            : _BuildTrascendentalList(
+                records: records,
+                scrollController: scrollController,
+              );
+  }
+}
+
+class _BuildTrascendentalList extends ConsumerWidget {
+  final List<TrascendentalRecord> records;
+  final ScrollController scrollController;
+
+  const _BuildTrascendentalList({
+    required this.records,
+    required this.scrollController,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),

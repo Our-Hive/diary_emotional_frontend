@@ -18,20 +18,63 @@ class HistoryDiaryView extends ConsumerStatefulWidget {
 }
 
 class HistoryAllViewState extends ConsumerState<HistoryDiaryView> {
+  final scrollController = ScrollController();
+
   @override
   void initState() {
     ref.read(historyProvider.notifier).getDailyRecords();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent * 0.9) {
+        ref.read(historyProvider.notifier).loadNextPage();
+      }
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+    scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<DailyRecord> records = ref.watch(historyProvider).dailyRecords;
+    final state = ref.watch(historyProvider);
+    final List<DailyRecord> records = state.dailyRecords;
+    return state.errorMessages.isNotEmpty
+        ? Center(
+            child: Text(state.errorMessages),
+          )
+        : records.isEmpty && state.isLoading
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 10),
+                    const Text('Cargando registros...'),
+                  ],
+                ),
+              )
+            : _BuildDailyList(
+                records: records,
+                scrollController: scrollController,
+              );
+  }
+}
+
+class _BuildDailyList extends ConsumerWidget {
+  final List<DailyRecord> records;
+  final ScrollController scrollController;
+
+  const _BuildDailyList({
+    required this.records,
+    required this.scrollController,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
