@@ -10,4 +10,11 @@ class RandomColor {
     final b = random.nextInt(255);
     return Color.fromRGBO(r, g, b, 1);
   }
+
+  static Color generateByList(List<Color> colors) {
+    final random = Random();
+    return colors[random.nextInt(
+      colors.length,
+    )];
+  }
 }

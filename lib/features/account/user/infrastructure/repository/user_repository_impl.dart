@@ -13,8 +13,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<User> updateUser(User user) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+    return _userDataSource.updateUser(user);
   }
 
   @override
