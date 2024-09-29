@@ -24,7 +24,7 @@ class MySpaceNotifier extends StateNotifier<MySpaceState> {
   Future<void> getMySpaces() async {
     try {
       await Future.delayed(Duration(seconds: 2));
-      final spaces = [
+      /*  final spaces = [
         MySpace(
           id: "id",
           name: "Nine Sols",
@@ -49,8 +49,8 @@ class MySpaceNotifier extends StateNotifier<MySpaceState> {
               "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
           createdAt: DateTime.now(),
         )
-      ];
-      /* await _externalRepository.getMySpace(); */
+      ]; */
+      final spaces = await _externalRepository.getMySpace();
       state = state.copyWith(spaces: spaces);
     } catch (e) {
       state = state.copyWith(error: e.toString());
