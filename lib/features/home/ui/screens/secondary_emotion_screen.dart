@@ -7,6 +7,7 @@ import 'package:emotional_app/shared/domain/records/record_types.dart';
 import 'package:emotional_app/shared/ui/color/color_utils.dart';
 import 'package:emotional_app/shared/ui/color/hex_color.dart';
 import 'package:emotional_app/shared/ui/widgets/emotion_card.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -42,8 +43,8 @@ class _SecondaryEmotionScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.emotion.toUpperCase()),
+      appBar: OurHiveAppBar(
+        title: widget.emotion.toUpperCase(),
       ),
       body: Column(
         children: [

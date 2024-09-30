@@ -1,5 +1,6 @@
 import 'package:emotional_app/features/info/domain/entities/contact_line.dart';
 import 'package:emotional_app/features/info/ui/providers/contact_line_provider.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,8 +28,8 @@ class _ContactLinesScreenState extends ConsumerState<ContactLinesScreen> {
     final state = ref.watch(contactLineProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lineas de Contacto'),
+      appBar: OurHiveAppBar(
+        title: 'Lineas de Contacto',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(

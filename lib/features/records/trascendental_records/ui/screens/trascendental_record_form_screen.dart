@@ -1,6 +1,7 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/home/ui/widgets/emotional_roulette.dart';
 import 'package:emotional_app/features/records/trascendental_records/ui/providers/trascendental_record_provider.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:emotional_app/shared/ui/widgets/our_hive_multicolor_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,8 +45,8 @@ class TrascendentalRecordFormScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registro Trascendental'),
+      appBar: OurHiveAppBar(
+        title: 'Registro Trascendental',
       ),
       body: Center(
         child: SingleChildScrollView(

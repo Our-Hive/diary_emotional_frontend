@@ -1,5 +1,6 @@
 import 'package:emotional_app/features/info/domain/entities/recommended_content.dart';
 import 'package:emotional_app/features/info/ui/providers/recommended_content_provider.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,8 +31,8 @@ class _RecommendedContentScreenState
     final state = ref.watch(recommendedContentProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recomendaciones'),
+      appBar: OurHiveAppBar(
+        title: "Recomendaciones",
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
