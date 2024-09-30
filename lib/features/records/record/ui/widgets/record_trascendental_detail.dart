@@ -130,16 +130,19 @@ class ImportantSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ImportantTrascendentalRecord(
+              field: "Lugar:",
               title: record.location,
               bgColor: colorCard,
             ),
             ImportantTrascendentalRecord(
+              field: "Actividad:",
               title: record.activity,
               bgColor: colorCard,
             ),
           ],
         ),
         ImportantTrascendentalRecord(
+          field: "Compañía:",
           title: record.companions,
           bgColor: colorCard,
         ),
@@ -150,27 +153,35 @@ class ImportantSection extends StatelessWidget {
 
 class ImportantTrascendentalRecord extends StatelessWidget {
   final String title;
+  final String field;
   final Color bgColor;
+
   const ImportantTrascendentalRecord({
     super.key,
     required this.title,
+    required this.field,
     required this.bgColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: bgColor,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+    return Column(
+      children: [
+        Text(field),
+        Card(
+          color: bgColor,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }
