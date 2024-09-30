@@ -5,7 +5,9 @@ class MySpaceApiMapper {
   static List<MySpace> fromGetMySpaceApprovedResponseDto(
       List<GetMySpaceApprovedResponseDto> dto) {
     return dto.map((e) {
-      final type = MySpaceType.image;
+      final type = e.contentType.contains('image')
+          ? MySpaceType.image
+          : MySpaceType.video;
       return MySpace(
         id: e.id,
         name: e.name,

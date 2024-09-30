@@ -5,6 +5,7 @@ import 'package:emotional_app/features/records/record/ui/widgets/record_daily_de
 import 'package:emotional_app/features/records/record/ui/widgets/record_trascendental_detail.dart';
 import 'package:emotional_app/features/records/trascendental_records/domain/entities/trascendental_record.dart';
 import 'package:emotional_app/shared/domain/records/record_types.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:emotional_app/shared/ui/widgets/our_hive_multicolor_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,12 +52,10 @@ class RecordDetailScreenState extends ConsumerState<RecordDetailScreen> {
   Widget build(BuildContext context) {
     const spacer = SizedBox(height: 40);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.recordType == RecordTypes.daily
-              ? "Registro Diario"
-              : "Registro Trascendental",
-        ),
+      appBar: OurHiveAppBar(
+        title: widget.recordType == RecordTypes.daily
+            ? "Registro Diario"
+            : "Registro Trascendental",
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
