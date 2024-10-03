@@ -1,4 +1,5 @@
 import 'package:emotional_app/features/home/domain/entities/emotion.dart';
+import 'package:emotional_app/features/home/ui/screens/primary_emotion_screen.dart';
 import 'package:emotional_app/features/records/daily_records/domain/entities/daily_record.dart';
 import 'package:emotional_app/features/records/history/infrastructure/external/dto/get_record_history_response_dto.dart';
 import 'package:emotional_app/features/records/record/domain/entities/record.dart';
@@ -22,7 +23,7 @@ class RecordHistoryMapper {
             name: e.secondaryEmotion.name,
             color: e.secondaryEmotion.color,
             description: e.secondaryEmotion.description,
-            colorBrightness: e.primaryEmotion.theme,
+            colorBrightness: e.secondaryEmotion.theme,
           ),
           description: e.description ?? '',
           date: e.createdAt,
@@ -40,7 +41,7 @@ class RecordHistoryMapper {
           name: e.secondaryEmotion.name,
           color: e.secondaryEmotion.color,
           description: e.secondaryEmotion.description,
-          colorBrightness: e.primaryEmotion.theme,
+          colorBrightness: e.secondaryEmotion.theme,
         ),
         location: e.location ?? '',
         activity: e.activity ?? '',
@@ -67,7 +68,7 @@ class RecordHistoryMapper {
             name: e.secondaryEmotion.name,
             color: e.secondaryEmotion.color,
             description: e.secondaryEmotion.description,
-            colorBrightness: e.primaryEmotion.theme,
+            colorBrightness: e.secondaryEmotion.theme,
           ),
           description: e.description ?? '',
           date: e.createdAt,
@@ -92,7 +93,7 @@ class RecordHistoryMapper {
           name: e.secondaryEmotion.name,
           color: e.secondaryEmotion.color,
           description: e.secondaryEmotion.description,
-          colorBrightness: e.primaryEmotion.theme,
+          colorBrightness: e.secondaryEmotion.theme,
         ),
         location: e.location ?? '',
         activity: e.activity ?? '',

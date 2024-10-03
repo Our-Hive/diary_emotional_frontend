@@ -81,7 +81,9 @@ class _MySpaceList extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: randomColor,
+                    color: space.type == MySpaceType.image
+                        ? randomColor
+                        : Colors.transparent,
                   ),
                   width: double.infinity,
                   height: double.infinity,

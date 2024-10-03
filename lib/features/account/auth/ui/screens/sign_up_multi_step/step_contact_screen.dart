@@ -4,6 +4,7 @@ import 'package:emotional_app/features/account/auth/ui/provider/auth_provider.da
 import 'package:emotional_app/features/account/auth/ui/provider/signup_form_provider.dart';
 import 'package:emotional_app/features/account/auth/ui/widgets/date_field.dart';
 import 'package:emotional_app/features/account/auth/ui/widgets/to_login_text_button.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,8 +15,8 @@ class SignUpStepContactScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registro'),
+      appBar: OurHiveAppBar(
+        title: 'Registro',
       ),
       body: const Center(
         child: Padding(

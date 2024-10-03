@@ -1,4 +1,5 @@
 import 'package:emotional_app/features/home/ui/widgets/emotional_roulette.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryEmotionScreen extends StatelessWidget {
@@ -8,8 +9,8 @@ class PrimaryEmotionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Emoción primaria'),
+      appBar: OurHiveAppBar(
+        title: 'Emoción primaria',
       ),
       body: Center(
         child: Column(

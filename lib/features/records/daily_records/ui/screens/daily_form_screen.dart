@@ -2,6 +2,7 @@ import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/records/daily_records/infrastructure/external/exceptions/cant_create_record_exception.dart';
 import 'package:emotional_app/features/records/daily_records/ui/providers/daily_form_provider.dart';
 import 'package:emotional_app/features/home/ui/widgets/emotional_roulette.dart';
+import 'package:emotional_app/shared/ui/widgets/our_hive_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -57,8 +58,8 @@ class DailyFormScreen extends ConsumerWidget {
       },
     );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Diario Emocional'),
+      appBar: OurHiveAppBar(
+        title: 'Diario Emocional',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
