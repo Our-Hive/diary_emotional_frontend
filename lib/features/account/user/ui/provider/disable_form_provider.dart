@@ -12,7 +12,7 @@ class DisableFormNotifier extends StateNotifier<DisableFormState> {
     state = state.copyWith(securityPassword: securityPassword);
   }
 
-  bool onSummit() {
+  bool onSubmit() {
     state = state.copyWith(isSubmitting: true);
     if (state.securityPassword.isNotEmpty) {
       state = state.copyWith(

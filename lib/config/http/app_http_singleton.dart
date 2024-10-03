@@ -39,18 +39,34 @@ class AppHttpSingleton {
     );
   }
 
-  Future<Response> get(String url, {Map<String, dynamic>? params}) async {
+  Future<Response> get(
+    String url, {
+    Map<String, dynamic>? params,
+  }) async {
     return _dioMainApi.get(
       url,
       queryParameters: params,
     );
   }
 
-  Future<Response> post(String url, {Map<String, dynamic>? data}) async {
+  Future<Response> post(
+    String url, {
+    Map<String, dynamic>? data,
+  }) async {
     return _dioMainApi.post(url, data: data);
   }
 
-  Future<Response> delete(String url, {Map<String, dynamic>? data}) async {
+  Future<Response> delete(
+    String url, {
+    Map<String, dynamic>? data,
+  }) async {
     return _dioMainApi.delete(url, data: data);
+  }
+
+  patch(
+    String url, {
+    Map<String, String>? data,
+  }) {
+    return _dioMainApi.patch(url, data: data);
   }
 }

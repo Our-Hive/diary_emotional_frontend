@@ -1,11 +1,13 @@
-import 'package:emotional_app/features/account/auth/ui/provider/signup_form_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:emotional_app/shared/domain/utils/date_time_formatter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DateField extends ConsumerStatefulWidget {
+  final Function(DateTime) onChange;
+
   const DateField({
     super.key,
+    required this.onChange,
   });
 
   @override
@@ -17,12 +19,17 @@ class DateFieldState extends ConsumerState<DateField> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme appColors = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white),
         borderRadius: BorderRadius.circular(10),
       ),
       child: FilledButton.tonalIcon(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all<Color>(appColors.onPrimary),
+          foregroundColor: WidgetStateProperty.all<Color>(appColors.primary),
+        ),
         onPressed: () async {
           DateTime? selectedDate = await showDatePicker(
             context: context,
@@ -34,9 +41,7 @@ class DateFieldState extends ConsumerState<DateField> {
             setState(() {
               _selectedDate = selectedDate;
             });
-            ref
-                .watch(signUpFormProvider.notifier)
-                .onBirthDateChanged(selectedDate);
+            widget.onChange(selectedDate);
           }
         },
         icon: const Icon(Icons.calendar_today),

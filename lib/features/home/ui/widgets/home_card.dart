@@ -1,4 +1,6 @@
+import 'package:emotional_app/config/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeCard extends StatelessWidget {
   final String title;
@@ -62,7 +64,7 @@ class HomeCard extends StatelessWidget {
                               content: Text(description),
                               actions: <TextButton>[
                                 TextButton(
-                                  onPressed: () => Navigator.pop(context),
+                                  onPressed: () => context.pop(),
                                   child: const Text('Entiendo'),
                                 ),
                               ],

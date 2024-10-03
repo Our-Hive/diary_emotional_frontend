@@ -109,7 +109,7 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
                       actions: [
                         TextButton(
                           child: const Text('OK'),
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () => context.pop(),
                         ),
                       ],
                     ),
@@ -158,7 +158,7 @@ class EmotionalRouletteState extends ConsumerState<EmotionalRoulette> {
               actions: [
                 TextButton(
                   child: const Text('OK'),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => context.pop(),
                 ),
               ],
             ),
