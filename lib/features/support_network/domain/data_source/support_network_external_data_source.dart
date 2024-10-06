@@ -5,4 +5,8 @@ abstract class SupportNetworkExternalDataSource {
     String userName,
   );
   Future<List<SupportNetworkMember>> getSupportNetwork();
+
+  Future<bool> removeSupportNetworkByUserName(
+    String userName,
+  );
 }

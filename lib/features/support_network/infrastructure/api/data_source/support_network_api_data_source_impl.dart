@@ -59,4 +59,19 @@ class SupportNetworkApiDataSourceImpl
       throw Exception();
     }
   }
+
+  @override
+  Future<bool> removeSupportNetworkByUserName(String userName) async {
+    try {
+      final response = await AppHttpSingleton().delete(
+        '/users/support-network/$userName',
+      );
+      if (response.statusCode != 204) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }
