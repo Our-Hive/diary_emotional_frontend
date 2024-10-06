@@ -1,4 +1,5 @@
 import 'package:emotional_app/features/support_network/ui/provider/add_user_to_network_provider.dart';
+import 'package:emotional_app/features/support_network/ui/provider/support_network_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,7 @@ class AddSupportNetworkSearch extends ConsumerWidget {
           return;
         }
         if (state.isSuccess) {
+          ref.read(supportNetworkProvider.notifier).getSupportNetwork();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: appColors.surface,
