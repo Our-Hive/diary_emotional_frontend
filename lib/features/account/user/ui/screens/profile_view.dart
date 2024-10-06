@@ -58,6 +58,7 @@ class ProfileViewState extends ConsumerState<ProfileView> {
       editUserFormProvider,
       (previous, next) {
         if (next.isSuccess) {
+          ref.read(userProvider.notifier).getUser();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Text('Usuario actualizado'),
@@ -174,7 +175,7 @@ class EditUserButton extends ConsumerWidget {
                 primaryText: user.userName,
                 secondaryText: user.userName,
                 onChange: (value) => ref
-                    .read(editUserFormProvider.notifier)
+                    .watch(editUserFormProvider.notifier)
                     .onUserNameChange(value),
               ),
               separator,
@@ -189,7 +190,7 @@ class EditUserButton extends ConsumerWidget {
               separator,
               DateField(
                 onChange: (dateTime) => ref
-                    .read(editUserFormProvider.notifier)
+                    .watch(editUserFormProvider.notifier)
                     .onBirthDateChange(dateTime),
               ),
             ],
@@ -387,7 +388,6 @@ class _ActiveTextFormFieldState extends State<_ActiveTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      readOnly: true,
       onTap: () => setState(() => isSelected ? false : true),
       onChanged: widget.onChange,
       decoration: InputDecoration(

@@ -37,9 +37,22 @@ class EditUserFormNotifier extends StateNotifier<EditUserFormState> {
       phone: state.phone,
       birthDate: state.birthDate,
     );
+
     isEdited
         ? state = state.copyWith(isSuccess: true)
         : state = state.copyWith(isFailure: true);
+    resetState();
+  }
+
+  void resetState() {
+    state = state.copyWith(
+      userName: '',
+      phone: '',
+      birthDate: null,
+      isSubmitting: false,
+      isSuccess: false,
+      isFailure: false,
+    );
   }
 }
 
