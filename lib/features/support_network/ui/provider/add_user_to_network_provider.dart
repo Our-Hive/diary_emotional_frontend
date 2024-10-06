@@ -64,6 +64,16 @@ class AddUserToNetworkNotifier extends StateNotifier<AddUserToNetworkState> {
         errorMessage: e.toString(),
       );
     }
+    resetState();
+  }
+
+  void resetState() {
+    state = state.copyWith(
+      userName: '',
+      isSubmitting: false,
+      isSuccess: false,
+      errorMessage: '',
+    );
   }
 }
 

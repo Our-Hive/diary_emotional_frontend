@@ -10,41 +10,6 @@ class AddSupportNetworkSearch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appColors = Theme.of(context).colorScheme;
-    ref.listen(
-      addUserToNetworkProvider,
-      (pervious, state) {
-        if (state.errorMessage.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: appColors.error,
-              content: Text(
-                state.errorMessage,
-                style: TextStyle(
-                  color: appColors.onError,
-                ),
-              ),
-            ),
-          );
-          return;
-        }
-        if (state.isSuccess) {
-          ref.read(supportNetworkProvider.notifier).getSupportNetwork();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: appColors.surface,
-              content: Text(
-                "Usuario añadido",
-                style: TextStyle(
-                  color: appColors.primary,
-                ),
-              ),
-            ),
-          );
-        }
-      },
-    );
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
