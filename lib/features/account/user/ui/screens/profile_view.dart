@@ -1,6 +1,7 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/account/auth/ui/widgets/date_field.dart';
 import 'package:emotional_app/features/account/user/ui/provider/edit_user_form_provider.dart';
+import 'package:emotional_app/features/support_network/ui/widgets/support_network_button.dart';
 import 'package:emotional_app/shared/domain/utils/random_color.dart';
 import 'package:emotional_app/shared/ui/password_form_field.dart';
 import 'package:emotional_app/features/account/user/domain/entities/user.dart';
@@ -37,6 +38,7 @@ class ProfileViewState extends ConsumerState<ProfileView> {
     final User user = ref.watch(userProvider).currentUser;
     final appColors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final Color randomColor = RandomColor.generate();
 
     ref.listen(userProvider, (previous, next) {
       if (next.status == UserStatus.disabled) {
@@ -79,6 +81,7 @@ class ProfileViewState extends ConsumerState<ProfileView> {
         }
       },
     );
+
     return Scaffold(
       appBar: OurHiveAppBar(
         title: 'Perfil',
@@ -96,7 +99,7 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                   Stack(
                     children: [
                       OurHiveColorIcon(
-                        color: RandomColor.generate(),
+                        color: randomColor,
                       ),
                       Positioned(
                         right: 0,
@@ -118,7 +121,9 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                       color: Colors.white60,
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
+                  SupportNetworkButton(color: randomColor),
+                  const SizedBox(height: 20),
                   UserDataGrid(
                     user: user,
                   ),
