@@ -12,12 +12,20 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<User> updateUser(User user) {
-    return _userDataSource.updateUser(user);
+  Future<bool> disableUser(String password) {
+    return _userDataSource.disableUser(password);
   }
 
   @override
-  Future<bool> disableUser(String password) {
-    return _userDataSource.disableUser(password);
+  Future<bool> updateUser({
+    String? userName,
+    String? phone,
+    DateTime? birthDate,
+  }) {
+    return _userDataSource.updateUser(
+      userName: userName,
+      phone: phone,
+      birthDate: birthDate,
+    );
   }
 }

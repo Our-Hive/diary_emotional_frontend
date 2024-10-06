@@ -137,7 +137,12 @@ class _SignUpContactForm extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 20),
-          const DateField(),
+          DateField(
+            onChange: (selectedDate) =>
+                ref.watch(signUpFormProvider.notifier).onBirthDateChanged(
+                      selectedDate,
+                    ),
+          ),
           const SizedBox(height: 20),
           FilledButton(
             onPressed: () =>

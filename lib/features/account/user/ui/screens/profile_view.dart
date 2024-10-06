@@ -1,4 +1,6 @@
 import 'package:emotional_app/config/router/app_routes_name.dart';
+import 'package:emotional_app/features/account/auth/ui/widgets/date_field.dart';
+import 'package:emotional_app/features/account/user/ui/provider/edit_user_form_provider.dart';
 import 'package:emotional_app/shared/domain/utils/random_color.dart';
 import 'package:emotional_app/shared/ui/password_form_field.dart';
 import 'package:emotional_app/features/account/user/domain/entities/user.dart';
@@ -52,6 +54,31 @@ class ProfileViewState extends ConsumerState<ProfileView> {
         );
       }
     });
+    ref.listen(
+      editUserFormProvider,
+      (previous, next) {
+        if (next.isSuccess) {
+          ref.read(userProvider.notifier).getUser();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Usuario actualizado'),
+              backgroundColor: appColors.primary,
+            ),
+          );
+        }
+        if (next.isFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Ha ocurrido un error al actualizar el usuario, intente de nuevo",
+                style: TextStyle(color: appColors.onError),
+              ),
+              backgroundColor: appColors.error,
+            ),
+          );
+        }
+      },
+    );
     return Scaffold(
       appBar: OurHiveAppBar(
         title: 'Perfil',
@@ -71,19 +98,11 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                       OurHiveColorIcon(
                         color: RandomColor.generate(),
                       ),
-                      /*
-                       todo:
-                       Positioned(
+                      Positioned(
                         right: 0,
                         bottom: 0,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.edit,
-                            size: 30,
-                          ),
-                          onPressed: () => print('Pressed'),
-                        ),
-                      ), */
+                        child: EditUserButton(),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 15),
@@ -103,21 +122,6 @@ class ProfileViewState extends ConsumerState<ProfileView> {
                   UserDataGrid(
                     user: user,
                   ),
-                  /*   Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: appColors.onSecondary),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: FilledButton.icon(
-                      onPressed: () => print('Pressed'),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: appColors.secondary,
-                        foregroundColor: appColors.onSecondary,
-                      ),
-                      icon: const Icon(Icons.edit),
-                      label: const Text('Editar perfil'),
-                    ),
-                  ), */
                   const SizedBox(height: 40),
                   FilledButton.icon(
                     onPressed: () => showDialog(
@@ -137,6 +141,89 @@ class ProfileViewState extends ConsumerState<ProfileView> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class EditUserButton extends ConsumerWidget {
+  const EditUserButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appColors = Theme.of(context).colorScheme;
+    final user = ref.watch(userProvider).currentUser;
+    const separator = SizedBox(height: 15);
+    return IconButton(
+      icon: const Icon(
+        Icons.edit,
+        size: 30,
+      ),
+      onPressed: () => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Editar perfil'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              separator,
+              _ActiveTextFormField(
+                appColors: appColors,
+                primaryText: user.userName,
+                secondaryText: user.userName,
+                onChange: (value) => ref
+                    .watch(editUserFormProvider.notifier)
+                    .onUserNameChange(value),
+              ),
+              separator,
+              _ActiveTextFormField(
+                appColors: appColors,
+                primaryText: 'Teléfono',
+                secondaryText: user.phoneNumber,
+                onChange: (value) => ref
+                    .read(editUserFormProvider.notifier)
+                    .onPhoneChange(value),
+              ),
+              separator,
+              DateField(
+                onChange: (dateTime) => ref
+                    .watch(editUserFormProvider.notifier)
+                    .onBirthDateChange(dateTime),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                overlayColor: appColors.error,
+              ),
+              child: Text(
+                'Cancelar',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: appColors.error),
+              ),
+              onPressed: () {
+                context.pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+                backgroundColor: appColors.primary,
+                foregroundColor: appColors.onPrimary,
+              ),
+              child: const Text('Guardar'),
+              onPressed: () {
+                ref.read(editUserFormProvider.notifier).onSubmit();
+                context.pop();
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -258,7 +345,7 @@ class _DisableAccountDialog extends ConsumerWidget {
             TextButton(
               onPressed: () {
                 final isValidated =
-                    ref.read(disableFormProvider.notifier).onSummit();
+                    ref.read(disableFormProvider.notifier).onSubmit();
                 if (isValidated) {
                   ref.read(userProvider.notifier).disableUser(
                         ref.read(disableFormProvider).securityPassword,
@@ -282,11 +369,13 @@ class _ActiveTextFormField extends StatefulWidget {
   final ColorScheme appColors;
   final String primaryText;
   final String secondaryText;
+  final Function(String) onChange;
 
   const _ActiveTextFormField({
     required this.appColors,
     required this.primaryText,
     required this.secondaryText,
+    required this.onChange,
   });
 
   @override
@@ -299,8 +388,8 @@ class _ActiveTextFormFieldState extends State<_ActiveTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      readOnly: true,
       onTap: () => setState(() => isSelected ? false : true),
+      onChanged: widget.onChange,
       decoration: InputDecoration(
         labelText: isSelected ? widget.primaryText : widget.secondaryText,
         hintText: !isSelected ? widget.primaryText : widget.secondaryText,

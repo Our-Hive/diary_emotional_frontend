@@ -1,5 +1,4 @@
 import 'package:emotional_app/features/home/domain/entities/emotion.dart';
-import 'package:emotional_app/features/home/ui/screens/primary_emotion_screen.dart';
 import 'package:emotional_app/features/records/daily_records/domain/entities/daily_record.dart';
 import 'package:emotional_app/features/records/history/infrastructure/external/dto/get_record_history_response_dto.dart';
 import 'package:emotional_app/features/records/record/domain/entities/record.dart';

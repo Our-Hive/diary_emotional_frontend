@@ -1,5 +1,6 @@
 import 'package:emotional_app/shared/ui/color/color_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class InfoButton extends StatelessWidget {
   final String title;
@@ -37,7 +38,7 @@ class InfoButton extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => context.pop(),
                 style: TextButton.styleFrom(
                   foregroundColor: appColors.error,
                 ),
