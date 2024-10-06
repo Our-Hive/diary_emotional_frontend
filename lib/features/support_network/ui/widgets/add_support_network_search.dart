@@ -1,4 +1,5 @@
 import 'package:emotional_app/features/support_network/ui/provider/add_user_to_network_provider.dart';
+import 'package:emotional_app/features/support_network/ui/provider/support_network_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -9,40 +10,6 @@ class AddSupportNetworkSearch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appColors = Theme.of(context).colorScheme;
-    ref.listen(
-      addUserToNetworkProvider,
-      (pervious, state) {
-        if (state.errorMessage.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: appColors.error,
-              content: Text(
-                state.errorMessage,
-                style: TextStyle(
-                  color: appColors.onError,
-                ),
-              ),
-            ),
-          );
-          return;
-        }
-        if (state.isSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: appColors.surface,
-              content: Text(
-                "Usuario añadido",
-                style: TextStyle(
-                  color: appColors.primary,
-                ),
-              ),
-            ),
-          );
-        }
-      },
-    );
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
