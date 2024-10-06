@@ -38,6 +38,27 @@ class SupportNetworkNotifier extends StateNotifier<SupportNetworkState> {
       );
     }
   }
+
+  removeSupportNetworkByUserName(String userName) async {
+    try {
+      final isRemoved = await _supportNetworkExternalRepository
+          .removeSupportNetworkByUserName(
+        userName,
+      );
+      if (isRemoved) {
+        getSupportNetwork();
+      }
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: "El usuario no fue expulsado, intenta de nuevo",
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
 }
 
 class SupportNetworkState {

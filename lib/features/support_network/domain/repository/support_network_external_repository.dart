@@ -5,4 +5,7 @@ abstract class SupportNetworkExternalRepository {
     String userName,
   );
   Future<List<SupportNetworkMember>> getSupportNetwork();
+  Future<bool> removeSupportNetworkByUserName(
+    String userName,
+  );
 }

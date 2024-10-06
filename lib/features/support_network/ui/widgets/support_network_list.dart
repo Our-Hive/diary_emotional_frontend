@@ -44,7 +44,7 @@ class _SupportNetworkListState extends ConsumerState<SupportNetworkList> {
   }
 }
 
-class SupportNetworkItemTile extends StatelessWidget {
+class SupportNetworkItemTile extends ConsumerWidget {
   final SupportNetworkMember member;
   const SupportNetworkItemTile({
     super.key,
@@ -52,7 +52,7 @@ class SupportNetworkItemTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final appColors = Theme.of(context).colorScheme;
 
     return ListTile(
@@ -89,7 +89,13 @@ class SupportNetworkItemTile extends StatelessWidget {
                 Icons.delete,
                 color: appColors.error,
               ),
-              onPressed: () {},
+              onPressed: () {
+                ref
+                    .read(supportNetworkProvider.notifier)
+                    .removeSupportNetworkByUserName(
+                      member.userName,
+                    );
+              },
             ),
     );
   }

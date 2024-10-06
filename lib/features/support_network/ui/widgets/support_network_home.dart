@@ -47,7 +47,25 @@ class SupportNetworkHome extends ConsumerWidget {
         }
       },
     );
-
+    ref.listen(
+      supportNetworkProvider,
+      (pervious, state) {
+        if (state.errorMessage.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: appColors.error,
+              content: Text(
+                state.errorMessage,
+                style: TextStyle(
+                  color: appColors.onError,
+                ),
+              ),
+            ),
+          );
+          return;
+        }
+      },
+    );
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(

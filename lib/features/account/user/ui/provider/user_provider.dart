@@ -44,7 +44,7 @@ class UserNotifier extends StateNotifier<UserState> {
     }
     state = state.copyWith(
       status: UserStatus.error,
-      errorMessage: 'el usuario no fue eliminado',
+      errorMessage: 'el usuario no fue eliminado, intenta de nuevo',
     );
   }
 }

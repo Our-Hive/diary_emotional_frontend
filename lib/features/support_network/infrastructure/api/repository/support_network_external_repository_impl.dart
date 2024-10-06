@@ -20,4 +20,9 @@ class SupportNetworkExternalRepositoryImpl
   Future<List<SupportNetworkMember>> getSupportNetwork() {
     return _dataSource.getSupportNetwork();
   }
+
+  @override
+  Future<bool> removeSupportNetworkByUserName(String userName) {
+    return _dataSource.removeSupportNetworkByUserName(userName);
+  }
 }
