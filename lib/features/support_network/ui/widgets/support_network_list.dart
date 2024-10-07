@@ -1,7 +1,9 @@
+import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/support_network/domain/entities/support_network_member.dart';
 import 'package:emotional_app/features/support_network/ui/provider/support_network_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SupportNetworkList extends ConsumerStatefulWidget {
   const SupportNetworkList({
@@ -69,18 +71,27 @@ class SupportNetworkItemTile extends ConsumerWidget {
           color: Colors.black,
         ),
       ),
-      // todo: change to inMyNetwork
-      leading: member.type == SupportNetworkType.inTheirNetwork
-          ? SizedBox()
-          : IconButton(
-              icon: CircleAvatar(
-                backgroundColor: appColors.surface,
-                child: Icon(
-                  Icons.remove_red_eye,
-                  color: appColors.primary,
+      leading: member.type == SupportNetworkType.inMyNetwork
+          ? SizedBox(
+              width: 50,
+            )
+          : SizedBox(
+              width: 50,
+              child: IconButton(
+                icon: CircleAvatar(
+                  backgroundColor: appColors.surface,
+                  child: Icon(
+                    Icons.remove_red_eye,
+                    color: appColors.primary,
+                  ),
+                ),
+                onPressed: () => context.goNamed(
+                  AppRoutesName.supportNetworkHistory,
+                  pathParameters: {
+                    "userId": member.id.toString(),
+                  },
                 ),
               ),
-              onPressed: () {},
             ),
       trailing: member.type == SupportNetworkType.inTheirNetwork
           ? SizedBox()

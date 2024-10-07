@@ -14,4 +14,5 @@ abstract class AppRoutesName {
   static const contactLinesScreen = 'contact_lines_screen';
   static const recommendedContentScreen = 'recommended_content_screen';
   static const mySpaceView = 'mySpace_view';
+  static const supportNetworkHistory = 'support_network_history';
 }

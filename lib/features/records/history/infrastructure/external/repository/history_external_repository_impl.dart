@@ -28,4 +28,9 @@ class HistoryExternalRepositoryImpl implements HistoryExternalRepository {
   }) {
     return _dataSources.getTrascendentalRecords(page: page);
   }
+
+  @override
+  Future<List<Record>> getHistoryByUserId({required int userId}) {
+    return _dataSources.getHistoryByUserId(userId: userId);
+  }
 }

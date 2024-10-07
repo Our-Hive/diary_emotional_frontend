@@ -75,7 +75,6 @@ class RecommendedContentCard extends StatelessWidget {
       onTap: () async => await launchUrl(Uri.parse(content.url)),
       child: Container(
         decoration: BoxDecoration(
-          // todo: configure color card
           color: const Color(0xffDEADCC),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(

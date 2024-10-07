@@ -14,4 +14,8 @@ abstract class HistoryExternalDataSource {
   Future<List<DailyRecord>> getDailyRecords({
     int page = 0,
   });
+  Future<List<Record>> getHistoryByUserId({
+    //int page = 0,
+    required int userId,
+  });
 }
