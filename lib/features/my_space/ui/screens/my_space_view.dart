@@ -140,12 +140,13 @@ class _MySpaceList extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
+                ), /*  
+                todo Implementar descarga de archivos
                 Positioned(
                   bottom: 10,
                   right: 10,
                   child: _DownLoadButton(),
-                ),
+                ), */
               ],
             );
           },

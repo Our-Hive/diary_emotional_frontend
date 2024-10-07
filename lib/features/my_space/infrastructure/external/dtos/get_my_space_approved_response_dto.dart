@@ -20,17 +20,17 @@ class GetMySpaceApprovedResponseDto {
         id: json["id"],
         name: json["name"],
         url: json["url"],
-        createdTime: DateTime.parse(json["created_time"]),
-        isApproved: json["is_approved"],
-        contentType: json["content_type"],
+        createdTime: DateTime.parse(json["createdTime"]),
+        isApproved: json["isApproved"],
+        contentType: json["contentType"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "url": url,
-        "created_time": createdTime.toIso8601String(),
-        "is_approved": isApproved,
-        "content_type": contentType,
+        "createdTime": createdTime.toIso8601String(),
+        "isApproved": isApproved,
+        "contentType": contentType,
       };
 }
