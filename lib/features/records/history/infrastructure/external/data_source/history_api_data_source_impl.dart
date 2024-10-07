@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:emotional_app/config/http/app_http_singleton.dart';
 import 'package:emotional_app/features/records/daily_records/domain/entities/daily_record.dart';
@@ -83,6 +85,22 @@ class HistoryApiDataSourceImpl implements HistoryExternalDataSource {
       throw Exception('Error fetching history');
     } catch (e) {
       throw Exception('Error fetching history');
+    }
+  }
+
+  @override
+  Future<List<Record>> getHistoryByUserId({required int userId}) async {
+    try {
+      final response = await AppHttpSingleton().get(
+        '/emotional-records/$userId',
+      );
+      final List<GetRecordHistoryResponseDto> dto = (response.data as List)
+          .map((e) => GetRecordHistoryResponseDto.fromJson(e))
+          .toList();
+      return RecordHistoryMapper.fromGetRecordHistoryResponseDto(dto);
+    } catch (e) {
+      log(e.toString());
+      return [];
     }
   }
 }

@@ -17,6 +17,7 @@ import 'package:emotional_app/features/my_space/ui/screens/my_space_view.dart';
 import 'package:emotional_app/config/router/app_routes_name.dart';
 import 'package:emotional_app/features/records/record/ui/screens/record_detail_screen.dart';
 import 'package:emotional_app/features/records/trascendental_records/ui/screens/trascendental_record_form_screen.dart';
+import 'package:emotional_app/features/support_network/ui/screens/support_network_history.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -51,6 +52,15 @@ final goRouterProvider = Provider(
               path: '/profile',
               name: AppRoutesName.profileView,
               builder: (context, state) => const ProfileView(),
+              routes: [
+                GoRoute(
+                  path: 'support-network-history/:userId',
+                  name: AppRoutesName.supportNetworkHistory,
+                  builder: (context, state) => SupportNetworkHistory(
+                    userId: int.parse(state.pathParameters["userId"]!),
+                  ),
+                ),
+              ],
             ),
             GoRoute(
               path: '/history',
